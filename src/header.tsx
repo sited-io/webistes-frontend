@@ -1,4 +1,4 @@
-import { A, useNavigate } from "@solidjs/router";
+import { A, useMatch, useNavigate } from "@solidjs/router";
 import _ from "lodash";
 import {
   ParentProps,
@@ -20,7 +20,7 @@ export function Header(props: ParentProps) {
   const navigate = useNavigate();
 
   const [website] = createResource(fetchWebsite);
-  const [session, sessionActions] = createResource(fetchSession);
+  const [session] = createResource(fetchSession);
 
   const [showHeaderShadow, setShowHeaderShadow] = createSignal(false);
   const [showNavigationSlider, setShowNavigationSlider] = createSignal(false);
@@ -48,22 +48,14 @@ export function Header(props: ParentProps) {
       if (!_.isNil(signInUrl)) {
         location.href = signInUrl.toString();
       } else {
-        await handleSignOut();
+        const signOutUrl = await signOut();
+        if (!_.isNil(signOutUrl)) {
+          location.href = signOutUrl.toString();
+        } else {
+          navigate("/");
+        }
       }
     }
-  }
-
-  async function handleSignOut() {
-    const signOutUrl = await signOut();
-    if (!_.isNil(signOutUrl)) {
-      location.href = signOutUrl.toString();
-    } else {
-      navigate("/");
-    }
-  }
-
-  async function handleRefreshSession() {
-    await refreshSession();
   }
 
   return (
@@ -96,20 +88,27 @@ export function Header(props: ParentProps) {
         </div>
 
         <div class={styles.HeaderRight}>
+          <div class={styles.Links}>
+            <A
+              class={styles.Link}
+              classList={{
+                [styles.LinkActive]: Boolean(useMatch(() => "/")()),
+              }}
+              href="/"
+            >
+              Home
+            </A>
+          </div>
+
           <Show
-            when={session()?.accessTokens?.accessToken}
+            when={session()?.isAuthenticated}
             fallback={
               <MdButton type="filled" square onClick={handleSignIn}>
                 <Font type="body" key={TKEYS.user["sign-in"]} />
               </MdButton>
             }
           >
-            <MdButton type="filled" square onClick={handleSignOut}>
-              <Font type="body" key={TKEYS.user["sign-out"]} />
-            </MdButton>
-            <MdButton type="filled" square onClick={handleRefreshSession}>
-              refresh session
-            </MdButton>
+            <MdIconButton icon="person" href="/user/settings" />
           </Show>
         </div>
       </div>

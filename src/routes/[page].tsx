@@ -10,7 +10,7 @@ export default function Index() {
   const { page } = useParams();
 
   return (
-    <main>
+    <>
       <Title>
         {website()?.name} | {page}
       </Title>
@@ -18,6 +18,6 @@ export default function Index() {
       <p>
         {website()?.name} | {page}
       </p>
-    </main>
+    </>
   );
 }

@@ -5,6 +5,7 @@ import { ComponentProps, splitProps } from "solid-js";
 
 type Props = ComponentProps<"i"> & {
   readonly icon: string;
+  readonly href?: string;
   readonly slot?: string | undefined;
 };
 
@@ -12,7 +13,7 @@ export function MdIconButton(props: Props) {
   const [local, others] = splitProps(props, ["icon"]);
 
   return (
-    <md-icon-button>
+    <md-icon-button href={props.href}>
       <md-icon {...others}>{local.icon}</md-icon>
     </md-icon-button>
   );

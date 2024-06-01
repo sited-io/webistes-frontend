@@ -7,6 +7,7 @@ import { getUrlFromRequestOrWindow } from "~/lib/env";
 import { hashCodeVerifier } from "~/lib/string-manipulation";
 
 export type Session = {
+  isAuthenticated?: boolean;
   userLogin?: UserLogin;
   accessTokens?: AccessTokens;
 };
@@ -88,6 +89,7 @@ export async function signIn(clientId: string, redirectTo: string) {
     await session.update(
       () =>
         ({
+          isAuthenticated: false,
           userLogin: {
             clientId,
             codeVerifier,
@@ -139,6 +141,7 @@ export async function signInCallback(event: APIEvent) {
     await session.update(
       () =>
         ({
+          isAuthenticated: true,
           accessTokens: {
             accessToken: accessTokenResponse.access_token,
             expiresAt,
@@ -188,6 +191,7 @@ export async function refreshSession() {
     await session.update(
       () =>
         ({
+          isAuthenticated: true,
           accessTokens: {
             accessToken: accessTokenResponse.access_token,
             expiresAt,
@@ -220,7 +224,12 @@ export async function signOut() {
     requestUri.searchParams.set("client_id", clientId);
 
     await session.update(
-      () => ({ userLogin: undefined, accessTokens: undefined } as Session)
+      () =>
+        ({
+          isAuthenticated: false,
+          userLogin: undefined,
+          accessTokens: undefined,
+        } as Session)
     );
 
     return requestUri;

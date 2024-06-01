@@ -9,8 +9,9 @@ export default function Index() {
   const [session] = createResource(fetchSession);
 
   return (
-    <main>
-      <Title>Hello World</Title>
+    <>
+      <Title>{website()?.name}</Title>
+
       <h1>Hello world!</h1>
       <p>
         Visit{" "}
@@ -21,6 +22,6 @@ export default function Index() {
       </p>
       <p>Fetched: {website()?.name}</p>
       {JSON.stringify(session(), null, 2)}
-    </main>
+    </>
   );
 }
