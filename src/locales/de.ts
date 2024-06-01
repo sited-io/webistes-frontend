@@ -3,6 +3,7 @@ import { EN } from "./en";
 
 export const DE: typeof TKEYS = {
   user: {
-    "sign-in": EN.user["sign-in"],
+    "sign-in": "Login",
+    "sign-out": "Logout",
   },
 };

@@ -1,23 +1,26 @@
-import { A } from "@solidjs/router";
+import { A, useNavigate } from "@solidjs/router";
 import _ from "lodash";
 import {
   ParentProps,
   Show,
-  createEffect,
   createResource,
   createSignal,
   onMount,
 } from "solid-js";
 
-import styles from "./header.module.scss";
-import { fetchWebsite } from "./services/website";
-import { MdIconButton } from "./components/assets/MdIconButton";
 import { MdButton } from "./components/assets/MdButton";
+import { MdIconButton } from "./components/assets/MdIconButton";
 import { Font } from "./components/content/Font";
+import styles from "./header.module.scss";
 import { TKEYS } from "./locales";
+import { fetchSession, refreshSession, signIn, signOut } from "./services/auth";
+import { fetchWebsite } from "./services/website";
 
 export function Header(props: ParentProps) {
+  const navigate = useNavigate();
+
   const [website] = createResource(fetchWebsite);
+  const [session, sessionActions] = createResource(fetchSession);
 
   const [showHeaderShadow, setShowHeaderShadow] = createSignal(false);
   const [showNavigationSlider, setShowNavigationSlider] = createSignal(false);
@@ -33,9 +36,35 @@ export function Header(props: ParentProps) {
     setShowNavigationSlider(true);
   }
 
-  onMount(() => {
+  onMount(async () => {
     window.addEventListener("scroll", handleHeaderShadow);
   });
+
+  async function handleSignIn() {
+    const clientId = website()?.clientId;
+    const redirectTo = location.href;
+    if (!_.isNil(clientId) && !_.isNil(redirectTo)) {
+      const signInUrl = await signIn(clientId, redirectTo);
+      if (!_.isNil(signInUrl)) {
+        location.href = signInUrl.toString();
+      } else {
+        await handleSignOut();
+      }
+    }
+  }
+
+  async function handleSignOut() {
+    const signOutUrl = await signOut();
+    if (!_.isNil(signOutUrl)) {
+      location.href = signOutUrl.toString();
+    } else {
+      navigate("/");
+    }
+  }
+
+  async function handleRefreshSession() {
+    await refreshSession();
+  }
 
   return (
     <>
@@ -67,9 +96,21 @@ export function Header(props: ParentProps) {
         </div>
 
         <div class={styles.HeaderRight}>
-          <MdButton type="filled" square href="/sign-in">
-            <Font type="body" key={TKEYS.user["sign-in"]} />
-          </MdButton>
+          <Show
+            when={session()?.accessTokens?.accessToken}
+            fallback={
+              <MdButton type="filled" square onClick={handleSignIn}>
+                <Font type="body" key={TKEYS.user["sign-in"]} />
+              </MdButton>
+            }
+          >
+            <MdButton type="filled" square onClick={handleSignOut}>
+              <Font type="body" key={TKEYS.user["sign-out"]} />
+            </MdButton>
+            <MdButton type="filled" square onClick={handleRefreshSession}>
+              refresh session
+            </MdButton>
+          </Show>
         </div>
       </div>
     </>

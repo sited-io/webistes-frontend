@@ -6,7 +6,7 @@ import { fetchWebsite } from "~/services/website";
 
 export default function Index() {
   const [website] = createResource(fetchWebsite);
-
+  
   return (
     <main>
       <Title>{website()?.name} | User Settings</Title>

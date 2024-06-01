@@ -1,10 +1,12 @@
 import { Title } from "@solidjs/meta";
-import { createResource } from "solid-js";
+import { createEffect, createResource } from "solid-js";
+import { fetchSession } from "~/services/auth";
 
 import { fetchWebsite } from "~/services/website";
 
 export default function Index() {
   const [website] = createResource(fetchWebsite);
+  const [session] = createResource(fetchSession);
 
   return (
     <main>
@@ -18,6 +20,7 @@ export default function Index() {
         to learn how to build SolidStart apps.
       </p>
       <p>Fetched: {website()?.name}</p>
+      {JSON.stringify(session(), null, 2)}
     </main>
   );
 }
