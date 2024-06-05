@@ -6,7 +6,7 @@
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
 import { Direction } from "../../ordering/v1/ordering_pb.js";
-import { Pagination } from "../../pagination/v1/pagination_pb.js";
+import { Pagination, PaginationRequest, PaginationResponse } from "../../pagination/v1/pagination_pb.js";
 
 /**
  * @generated from enum peoplesmarkets.media.v1.MediaOrderByField
@@ -623,9 +623,9 @@ export class ListMediaResponse extends Message<ListMediaResponse> {
  */
 export class ListAccessibleMediaRequest extends Message<ListAccessibleMediaRequest> {
   /**
-   * @generated from field: optional peoplesmarkets.pagination.v1.Pagination pagination = 2;
+   * @generated from field: optional peoplesmarkets.pagination.v1.PaginationRequest pagination = 2;
    */
-  pagination?: Pagination;
+  pagination?: PaginationRequest;
 
   /**
    * @generated from field: optional peoplesmarkets.media.v1.MediaOrderBy order_by = 3;
@@ -645,7 +645,7 @@ export class ListAccessibleMediaRequest extends Message<ListAccessibleMediaReque
   static readonly runtime: typeof proto3 = proto3;
   static readonly typeName = "peoplesmarkets.media.v1.ListAccessibleMediaRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
-    { no: 2, name: "pagination", kind: "message", T: Pagination, opt: true },
+    { no: 2, name: "pagination", kind: "message", T: PaginationRequest, opt: true },
     { no: 3, name: "order_by", kind: "message", T: MediaOrderBy, opt: true },
     { no: 4, name: "filter", kind: "message", T: MediaFilter, opt: true },
   ]);
@@ -677,9 +677,9 @@ export class ListAccessibleMediaResponse extends Message<ListAccessibleMediaResp
   medias: MediaResponse[] = [];
 
   /**
-   * @generated from field: peoplesmarkets.pagination.v1.Pagination pagination = 2;
+   * @generated from field: peoplesmarkets.pagination.v1.PaginationResponse pagination = 2;
    */
-  pagination?: Pagination;
+  pagination?: PaginationResponse;
 
   constructor(data?: PartialMessage<ListAccessibleMediaResponse>) {
     super();
@@ -690,7 +690,7 @@ export class ListAccessibleMediaResponse extends Message<ListAccessibleMediaResp
   static readonly typeName = "peoplesmarkets.media.v1.ListAccessibleMediaResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "medias", kind: "message", T: MediaResponse, repeated: true },
-    { no: 2, name: "pagination", kind: "message", T: Pagination },
+    { no: 2, name: "pagination", kind: "message", T: PaginationResponse },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListAccessibleMediaResponse {

@@ -11,7 +11,7 @@ $header-height: 56px;
   justify-content: space-between;
   transition: box-shadow 0.3s ease-out 0ms;
   z-index: 99;
-  background-color: #fff;
+  background-color: var(--md-sys-color-secondary-container);
 }
 
 .HeaderShadow {
@@ -83,5 +83,5 @@ $header-height: 56px;
 }
 
 .LinkActive {
-  box-shadow: inset 0px -3px 0px 0px rgb(66, 133, 244);
+  box-shadow: inset 0px -3px 0px 0px var(--md-sys-color-primary);
 }

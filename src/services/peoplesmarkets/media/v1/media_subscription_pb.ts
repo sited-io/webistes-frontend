@@ -5,7 +5,7 @@
 
 import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialMessage, PlainMessage } from "@bufbuild/protobuf";
 import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
-import { Pagination } from "../../pagination/v1/pagination_pb.js";
+import { PaginationRequest, PaginationResponse } from "../../pagination/v1/pagination_pb.js";
 
 /**
  * @generated from message peoplesmarkets.media.v1.MediaSubscriptionResponse
@@ -334,9 +334,9 @@ export class ListMediaSubscriptionsRequest extends Message<ListMediaSubscription
   shopId?: string;
 
   /**
-   * @generated from field: optional peoplesmarkets.pagination.v1.Pagination pagination = 2;
+   * @generated from field: optional peoplesmarkets.pagination.v1.PaginationRequest pagination = 2;
    */
-  pagination?: Pagination;
+  pagination?: PaginationRequest;
 
   /**
    * @generated from field: optional bool is_accessible = 3;
@@ -352,7 +352,7 @@ export class ListMediaSubscriptionsRequest extends Message<ListMediaSubscription
   static readonly typeName = "peoplesmarkets.media.v1.ListMediaSubscriptionsRequest";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "shop_id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
-    { no: 2, name: "pagination", kind: "message", T: Pagination, opt: true },
+    { no: 2, name: "pagination", kind: "message", T: PaginationRequest, opt: true },
     { no: 3, name: "is_accessible", kind: "scalar", T: 8 /* ScalarType.BOOL */, opt: true },
   ]);
 
@@ -383,9 +383,9 @@ export class ListMediaSubscriptionsResponse extends Message<ListMediaSubscriptio
   mediaSubscriptions: MediaSubscriptionResponse[] = [];
 
   /**
-   * @generated from field: peoplesmarkets.pagination.v1.Pagination pagination = 2;
+   * @generated from field: peoplesmarkets.pagination.v1.PaginationResponse pagination = 2;
    */
-  pagination?: Pagination;
+  pagination?: PaginationResponse;
 
   constructor(data?: PartialMessage<ListMediaSubscriptionsResponse>) {
     super();
@@ -396,7 +396,7 @@ export class ListMediaSubscriptionsResponse extends Message<ListMediaSubscriptio
   static readonly typeName = "peoplesmarkets.media.v1.ListMediaSubscriptionsResponse";
   static readonly fields: FieldList = proto3.util.newFieldList(() => [
     { no: 1, name: "media_subscriptions", kind: "message", T: MediaSubscriptionResponse, repeated: true },
-    { no: 2, name: "pagination", kind: "message", T: Pagination },
+    { no: 2, name: "pagination", kind: "message", T: PaginationResponse },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ListMediaSubscriptionsResponse {

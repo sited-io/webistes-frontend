@@ -8,13 +8,14 @@ import {
   onMount,
 } from "solid-js";
 
-import { MdButton } from "./components/assets/MdButton";
-import { MdIconButton } from "./components/assets/MdIconButton";
+import { MdButton } from "./components/form/MdButton";
+import { MdIconButton } from "./components/form/MdIconButton";
 import { Font } from "./components/content/Font";
 import styles from "./header.module.scss";
 import { TKEYS } from "./locales";
-import { fetchSession, refreshSession, signIn, signOut } from "./services/auth";
+import { fetchSession, signIn, signOut } from "./services/auth";
 import { fetchWebsite } from "./services/website";
+import { userIndexPath } from "./routes/user";
 
 export function Header(props: ParentProps) {
   const navigate = useNavigate();
@@ -108,7 +109,7 @@ export function Header(props: ParentProps) {
               </MdButton>
             }
           >
-            <MdIconButton icon="person" href="/user/settings" />
+            <MdIconButton icon="person" href={userIndexPath} />
           </Show>
         </div>
       </div>

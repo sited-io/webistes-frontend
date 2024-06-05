@@ -1,9 +1,9 @@
 import type { APIEvent } from "@solidjs/start/server";
 import axios from "axios";
 import _ from "lodash";
-import { getQuery, useSession } from "vinxi/http";
+import { SessionData, getQuery, useSession } from "vinxi/http";
 
-import { getUrlFromRequestOrWindow } from "~/lib/env";
+import { buildUrl, getUrlFromRequestOrWindow } from "~/lib/env";
 import { hashCodeVerifier } from "~/lib/string-manipulation";
 
 export type Session = {
@@ -35,37 +35,38 @@ type AccessTokenResponse = {
 };
 
 function buildSignInCallbackUrl() {
-  const currentUrl = getUrlFromRequestOrWindow();
-  currentUrl.pathname = "/user/sign-in-callback";
-  currentUrl.search = "";
-  return currentUrl.toString();
+  return buildUrl("/user/sign-in-callback").toString();
 }
 
 function buildSignOutCallbackUrl() {
-  const currentUrl = getUrlFromRequestOrWindow();
-  currentUrl.pathname = "/";
-  currentUrl.search = "";
-  return currentUrl.toString();
-}
-
-export async function fetchSession(): Promise<Session | undefined> {
-  "use server";
-  try {
-    const session = await getSession();
-    return session.data as Session;
-  } catch (err) {
-    console.error(err);
-  }
+  return buildUrl("/").toString();
 }
 
 export async function getSession() {
   "use server";
-  return useSession({
+  return useSession<Session>({
     password: process.env.SESSION_SECRET!,
   });
 }
 
-export async function signIn(clientId: string, redirectTo: string) {
+export async function withAuthHeader() {
+  "use server";
+  const session = await getSession();
+  const accessToken = session?.data?.accessTokens?.accessToken;
+  if (!_.isNil(accessToken) && !_.isEmpty(accessToken)) {
+    return {
+      Authorization: `Bearer ${accessToken}`,
+    };
+  }
+}
+
+export type SignInPrompt = "create" | "select_account" | "login" | undefined;
+
+export async function signIn(
+  clientId: string,
+  redirectTo: string,
+  prompt?: SignInPrompt
+): Promise<URL | undefined> {
   "use server";
   try {
     const session = await getSession();
@@ -85,6 +86,9 @@ export async function signIn(clientId: string, redirectTo: string) {
     requestUri.searchParams.set("response_type", "code");
     requestUri.searchParams.set("code_challenge", codeChallenge);
     requestUri.searchParams.set("code_challenge_method", "S256");
+    if (!_.isNil(prompt) && !_.isEmpty(prompt)) {
+      requestUri.searchParams.set("prompt", prompt);
+    }
 
     await session.update(
       () =>
@@ -101,7 +105,7 @@ export async function signIn(clientId: string, redirectTo: string) {
 
     return requestUri;
   } catch (err) {
-    console.error(`${err}`);
+    console.error(`[signIn]: ${err}`);
   }
 }
 
@@ -151,9 +155,19 @@ export async function signInCallback(event: APIEvent) {
     );
     return redirectResponse(redirectTo);
   } catch (err) {
-    console.error(`${err}`);
+    console.error(`[signInCallback]: ${err}`);
 
     return redirectResponse("/");
+  }
+}
+
+export async function fetchSession(): Promise<Session | undefined> {
+  "use server";
+  try {
+    const session = await getSession();
+    return session.data as Session;
+  } catch (err) {
+    console.error(`[fetchSession]: ${err}`);
   }
 }
 
@@ -200,7 +214,7 @@ export async function refreshSession() {
         } as Session)
     );
   } catch (err) {
-    console.error(`${err}`);
+    console.error(`[refreshSession]: ${err}`);
   }
 }
 
@@ -234,7 +248,7 @@ export async function signOut() {
 
     return requestUri;
   } catch (err) {
-    console.error(`${err}`);
+    console.error(`[signOut]: ${err}`);
   }
 }
 

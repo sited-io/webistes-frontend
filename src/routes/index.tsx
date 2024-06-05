@@ -1,27 +1,41 @@
 import { Title } from "@solidjs/meta";
-import { createEffect, createResource } from "solid-js";
-import { fetchSession } from "~/services/auth";
+import { For, Show, createResource } from "solid-js";
 
+import { OfferDetail } from "~/components/commerce/OfferDetail";
+import { Border } from "~/components/layout/Border";
+import { buildUrl } from "~/lib/env";
+import { offerService } from "~/services/commerce";
 import { fetchWebsite } from "~/services/website";
+
+export const indexPath = "/";
+export const indexUrl = () => buildUrl(indexPath);
 
 export default function Index() {
   const [website] = createResource(fetchWebsite);
-  const [session] = createResource(fetchSession);
+  const [offers] = createResource(
+    () => website()?.shopId,
+    async (websiteId: string) => offerService.listOffers({ shopId: websiteId })
+  );
+
+  function isLastItem(index: number) {
+    return index + 1 === offers?.length;
+  }
 
   return (
     <>
       <Title>{website()?.name}</Title>
 
-      <h1>Hello world!</h1>
-      <p>
-        Visit{" "}
-        <a href="https://start.solidjs.com" target="_blank">
-          start.solidjs.com
-        </a>{" "}
-        to learn how to build SolidStart apps.
-      </p>
-      <p>Fetched: {website()?.name}</p>
-      {JSON.stringify(session(), null, 2)}
+      <For each={offers()}>
+        {(offer, index) => (
+          <div data-index={index()}>
+            <OfferDetail offer={() => offer} />
+
+            <Show when={!isLastItem(index())}>
+              <Border />
+            </Show>
+          </div>
+        )}
+      </For>
     </>
   );
 }

@@ -3,18 +3,18 @@ import "@material/web/iconbutton/icon-button";
 
 import { ComponentProps, splitProps } from "solid-js";
 
-type Props = ComponentProps<"i"> & {
+type Props = ComponentProps<"button"> & {
   readonly icon: string;
   readonly href?: string;
   readonly slot?: string | undefined;
 };
 
 export function MdIconButton(props: Props) {
-  const [local, others] = splitProps(props, ["icon"]);
+  const [local, others] = splitProps(props, ["icon", "slot"]);
 
   return (
-    <md-icon-button href={props.href}>
-      <md-icon {...others}>{local.icon}</md-icon>
+    <md-icon-button {...others} href={others.href}>
+      <md-icon slot={local.slot}>{local.icon}</md-icon>
     </md-icon-button>
   );
 }

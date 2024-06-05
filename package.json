@@ -2,7 +2,7 @@
   "name": "example-bare",
   "type": "module",
   "scripts": {
-    "dev": "vinxi dev --port 8000",
+    "dev": "vinxi dev --port 8000 ",
     "gen": "rm -rf src/services/peoplesmarkets && buf generate service-apis/proto --template buf.gen.service-apis.yaml",
     "build": "vinxi build",
     "test": "vitest run",
@@ -16,6 +16,7 @@
     "@bufbuild/protobuf": "^1.10.0",
     "@connectrpc/connect": "^1.4.0",
     "@connectrpc/connect-web": "^1.4.0",
+    "@material/material-color-utilities": "^0.2.7",
     "@material/web": "^1.5.0",
     "@mbarzda/solid-i18next": "^1.4.1",
     "@solidjs/meta": "^0.29.4",

@@ -9,16 +9,16 @@ import { ComponentProps, Match, JSX as SolidJSX, Switch } from "solid-js";
 import styles from "./MdButton.module.scss";
 
 type Props = {
-  type?: "elevated" | "filled" | "filled-tonal" | "outlined" | "text";
-  href?: string | undefined;
-  submit?: boolean | undefined;
-  disabled?: boolean | undefined;
-  danger?: boolean | undefined;
-  square?: boolean | undefined;
-  wide?: boolean | undefined;
-  trailingIcon?: boolean | undefined;
-  onClick?: (_event: any) => void;
-  children: SolidJSX.Element;
+  readonly type?: "elevated" | "filled" | "filled-tonal" | "outlined" | "text";
+  readonly href?: string | undefined;
+  readonly submit?: boolean | undefined;
+  readonly disabled?: boolean | undefined;
+  readonly danger?: boolean | undefined;
+  readonly square?: boolean | undefined;
+  readonly wide?: boolean | undefined;
+  readonly trailingIcon?: boolean | undefined;
+  readonly onClick?: (_event: any) => void;
+  readonly children: SolidJSX.Element;
 };
 
 export function MdButton(props: Props) {

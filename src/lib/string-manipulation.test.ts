@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import {
   base64ToUtf8,
@@ -8,12 +8,9 @@ import {
   parseJwtPayload,
   utf8ToBase64,
 } from "./string-manipulation";
-import { cleanupDOM, createDOM, expectNoError } from "./testing";
+import { expectNoError } from "./testing";
 
 describe("string-manipulation", () => {
-  beforeEach(createDOM);
-  afterEach(cleanupDOM);
-
   describe("encodeArrayBufferToBase64Url", () => {
     test("encode empty ArrayBuffer : ok", () => {
       const buffer = new ArrayBuffer(0);

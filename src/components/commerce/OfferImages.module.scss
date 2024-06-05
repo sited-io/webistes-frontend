@@ -1,0 +1,126 @@
+.OfferImages {
+  display: flex;
+  flex-direction: column;
+
+  user-select: none;
+
+  @media only screen and (min-width: 600px) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+.MainImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-height: 200px;
+  max-height: 200px;
+
+  @media only screen and (min-width: 600px) {
+    min-height: 400px;
+    max-height: 400px;
+  }
+}
+
+.ImageContainer {
+  position: relative;
+}
+
+.Image {
+  width: 100%;
+  display: block;
+  object-fit: contain;
+  border-radius: 2px;
+  max-height: 200px;
+
+  @media only screen and (min-width: 600px) {
+    max-height: 400px;
+  }
+}
+
+.ImageGallery {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow-x: scroll;
+  overscroll-behavior: contain;
+
+  scrollbar-width: thin;
+
+  max-height: 200px;
+
+  @media only screen and (min-width: 600px) {
+    max-height: 400px;
+    margin-top: 0;
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-direction: column;
+  }
+}
+
+.PreviewItem:first-child {
+  margin-left: auto;
+  @media only screen and (min-width: 600px) {
+    margin: 0;
+  }
+}
+
+.PreviewItem:last-child {
+  margin-right: auto;
+  @media only screen and (min-width: 600px) {
+    margin: 0;
+  }
+}
+
+.PreviewImage {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 2px solid transparent;
+}
+
+.PreviewImage:hover {
+  cursor: pointer;
+}
+
+.ActivePreview {
+  border-color: var(--active-content-color);
+}
+
+.DeleteButton {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: var(--primary-background-color-lighten);
+
+  user-select: none;
+  border: none;
+  outline: inherit;
+  text-align: start;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.DeleteButton:hover {
+  cursor: pointer;
+}
+
+.DeleteIcon {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  fill: var(--primary-content-color);
+}

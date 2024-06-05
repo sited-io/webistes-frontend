@@ -8,3 +8,71 @@ html {
     display: none;
   }
 }
+
+:root {
+  // Screen Size Breakpoints
+  $small-min-width: 330px;
+  $medium-min-width: 600px;
+  $expanded-min-width: 1080px;
+  $medium-max-width: $expanded-min-width - 1px;
+  --small-min-width: 330px;
+  --medium-min-width: 600px;
+  --medium-max-width: 1080px;
+  --expanded-min-width: 1081px;
+  --expanded-max-width: 1440px;
+
+  // Fonts
+  --font-display-small: normal normal 400 36px /1.2222 "Noto Sans";
+  --font-display-medium: normal normal 400 45px /1.1555 "Noto Sans";
+  --font-display-large: normal normal 400 57px /1.1228 "Noto Sans";
+
+  --font-headline-small: normal normal 400 24px /1.3333 "Noto Sans";
+  --font-headline-medium: normal normal 400 28px /1.2857 "Noto Sans";
+  --font-headline-large: normal normal 400 32px /1.25 "Noto Sans";
+
+  --font-title-small: normal normal 400 14px /1.4285 "Noto Sans";
+  --font-title-medium: normal normal 400 18px /1.5 "Noto Sans";
+  --font-title-large: normal normal 400 22px /1.2727 "Noto Sans";
+
+  --font-label-small: normal normal 500 12px /1.3333 "Roboto";
+  --font-label-medium: normal normal 500 14px /1.4285 "Roboto";
+  --font-label-large: normal normal 500 16px /1.5 "Roboto";
+
+  --font-body-small: normal normal 400 12px /1.3333 "Roboto";
+  --font-body-medium: normal normal 400 14px /1.4286 "Roboto";
+  --font-body-large: normal normal 400 16px /1.5 "Roboto";
+
+  --font-display: var(--font-display-small);
+  --font-headline: var(--font-headline-small);
+  --font-title: var(--font-title-medium);
+  --font-label: var(--font-label-large);
+  --font-body: var(--font-body-medium);
+  --font-detail: var(--font-body-small);
+
+  @media only screen and (max-width: $small-min-width) {
+    --font-display: var(--font-display-small);
+    --font-headline: var(--font-headline-small);
+    --font-title: var(--font-title-small);
+    --font-label: var(--font-label-small);
+    --font-body: var(--font-body-small);
+    --font-detail: var(--font-body-small);
+  }
+
+  @media only screen and (min-width: $medium-min-width) and (max-width: $medium-max-width) {
+    --font-display: var(--font-display-medium);
+    --font-headline: var(--font-headline-medium);
+    --font-title: var(--font-title-medium);
+    --font-label: var(--font-label-large);
+    --font-body: var(--font-body-medium);
+    --font-detail: var(--font-body-small);
+  }
+
+  @media only screen and (min-width: $expanded-min-width) {
+    --font-display: var(--font-display-large);
+    --font-headline: var(--font-headline-large);
+    --font-title: var(--font-title-large);
+    --font-label: var(--font-label-large);
+    --font-body: var(--font-body-large);
+    --font-detail: var(--font-body-medium);
+  }
+}
