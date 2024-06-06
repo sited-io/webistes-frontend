@@ -1,5 +1,5 @@
 {
-  "name": "example-bare",
+  "name": "websites-frontend",
   "type": "module",
   "scripts": {
     "dev": "vinxi dev --port 8000 ",
