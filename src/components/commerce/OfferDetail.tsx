@@ -16,12 +16,10 @@ export function OfferDetail(props: Props) {
   return (
     <>
       <div class={styles.OfferDetailView}>
-        <Section>
-          <div class={styles.Images}>
-            <Show when={!_.isEmpty(props.offer()?.images)}>
-              <OfferImages offer={props.offer} />
-            </Show>
-          </div>
+        <Section class={styles.Images}>
+          <Show when={!_.isEmpty(props.offer()?.images)}>
+            <OfferImages offer={props.offer} />
+          </Show>
         </Section>
 
         <Section class={styles.Summary} padded>

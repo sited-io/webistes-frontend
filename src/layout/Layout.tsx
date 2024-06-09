@@ -42,6 +42,9 @@ export function Layout(props: ParentProps) {
   return (
     <MetaProvider>
       <Suspense>
+        {/* TODO: allow custom icon */}
+        <Link rel="icon" href="/favicon.ico" />
+
         <Link rel="preconnect" href="https://fonts.googleapis.com" />
         <Link
           rel="preconnect"

@@ -40,14 +40,7 @@ html {
 
   --font-body-small: normal normal 400 12px /1.3333 "Roboto";
   --font-body-medium: normal normal 400 14px /1.4286 "Roboto";
-  --font-body-large: normal normal 400 16px /1.5 "Roboto";
-
-  --font-display: var(--font-display-small);
-  --font-headline: var(--font-headline-small);
-  --font-title: var(--font-title-medium);
-  --font-label: var(--font-label-large);
-  --font-body: var(--font-body-medium);
-  --font-detail: var(--font-body-small);
+  --font-body-large: normal normal 400 14px /1.5 "Roboto";
 
   @media only screen and (max-width: $small-min-width) {
     --font-display: var(--font-display-small);

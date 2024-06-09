@@ -2,18 +2,42 @@
   width: 100%;
   height: 32px;
   display: flex;
-  justify-content: center;
   align-items: center;
 
   background-color: var(--md-sys-color-tertiary-container);
 }
 
 .PoweredBy {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
   font: var(--font-body);
   color: var(--md-sys-color-on-tertiary-container);
 }
 
 .MainLink {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
   font: var(--font-body);
   color: var(--md-sys-color-on-tertiary-container);
+}
+
+.MainLink:hover {
+  background-color: rgba(0, 0, 0, 0);
+  background: var(--hovered-background);
+  cursor: pointer;
+}
+
+.MainLogo {
+  height: 20px;
+  margin: 0 8px;
+  user-select: none;
+}
+
+.MainLogo path {
+  fill: var(--md-sys-color-on-tertiary-container);
 }

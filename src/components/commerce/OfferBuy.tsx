@@ -1,6 +1,12 @@
 import { Trans } from "@mbarzda/solid-i18next";
 import _ from "lodash";
-import { Show, Suspense, createResource } from "solid-js";
+import {
+  Show,
+  Suspense,
+  createEffect,
+  createResource,
+  createSignal,
+} from "solid-js";
 
 import { indexUrl } from "~/routes";
 import { userIndexPath } from "~/routes/user";
@@ -19,6 +25,14 @@ import { Font } from "../content";
 import { ContentLoading } from "../content/ContentLoading";
 import styles from "./OfferBuy.module.scss";
 
+type ActionState =
+  | "already-subscribed"
+  | "loading"
+  | "contact-email"
+  | "no-payment-method"
+  | "login"
+  | "subscribe"
+  | "buy";
 type Props = {
   readonly offer: () => OfferResponse;
 };
@@ -26,6 +40,8 @@ type Props = {
 export function OfferBuy(props: Props) {
   const [website] = createResource(fetchWebsite);
   const [session] = createResource(fetchSession);
+
+  const [actionState, setActionState] = createSignal("loading");
 
   const [mediaSubscription] = createResource(
     () =>
@@ -58,24 +74,24 @@ export function OfferBuy(props: Props) {
     }
   );
 
-  function actionState() {
+  createEffect(() => {
     const subscription = mediaSubscription();
     if (
       !_.isNil(subscription) &&
       subscription.payedUntil > new Date().getTime() / 1000
     ) {
-      return "already-subscribed";
+      return setActionState("already-subscribed");
     }
 
     if (stripeAccount.loading) {
-      return "loading";
+      return setActionState("loading");
     }
 
     if (!stripeAccount()?.enabled) {
       if (!_.isEmpty(website()?.contactEmailAddress)) {
-        return "contact-email";
+        return setActionState("contact-email");
       }
-      return "no-payment-method";
+      return setActionState("no-payment-method");
     }
 
     if (
@@ -83,15 +99,15 @@ export function OfferBuy(props: Props) {
       props.offer()?.type === OfferType.DIGITAL &&
       !session()?.isAuthenticated
     ) {
-      return "login";
+      return setActionState("login");
     }
 
     if (props.offer()?.price?.priceType === PriceType.RECURRING) {
-      return "subscribe";
+      return setActionState("subscribe");
     }
 
-    return "buy";
-  }
+    return setActionState("buy");
+  });
 
   function contactEmailAddress() {
     const shop = website();

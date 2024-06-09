@@ -18,7 +18,7 @@ export default function Index() {
   );
 
   function isLastItem(index: number) {
-    return index + 1 === offers?.length;
+    return index + 1 === offers()?.length;
   }
 
   return (

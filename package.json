@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vinxi dev --port 8000 ",
     "gen": "rm -rf src/services/peoplesmarkets && buf generate service-apis/proto --template buf.gen.service-apis.yaml",
-    "build": "vinxi build",
+    "build": "vinxi build --port 8000",
     "test": "vitest run",
     "test:watch": "vitest",
     "start": "vinxi start --port 8000"

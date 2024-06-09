@@ -70,17 +70,6 @@ export function Header(props: Props) {
     }
   }
 
-  async function handleSignOut() {
-    handleCloseNavigationSlider();
-
-    const signOutUrl = await signOut();
-    if (!_.isNil(signOutUrl)) {
-      location.href = signOutUrl.toString();
-    } else {
-      navigate("/");
-    }
-  }
-
   return (
     <>
       <div

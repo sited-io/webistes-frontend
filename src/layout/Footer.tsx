@@ -1,5 +1,7 @@
+import { A } from "@solidjs/router";
 import { ParentProps } from "solid-js";
 
+import { SitedIoLogo } from "~/components/assets/SitedIoLogo";
 import styles from "./Footer.module.scss";
 
 export function Footer(props: ParentProps) {
@@ -12,13 +14,13 @@ export function Footer(props: ParentProps) {
     <div class={styles.Footer}>
       <p class={styles.PoweredBy}>
         website powered by:{" "}
-        <a
+        <A
           class={styles.MainLink}
           href={import.meta.env.VITE_MAIN_WEBSITE_URL}
           target="_blank"
         >
-          {mainWebsiteDisplay()}
-        </a>
+          <SitedIoLogo class={styles.MainLogo} />
+        </A>
       </p>
     </div>
   );
