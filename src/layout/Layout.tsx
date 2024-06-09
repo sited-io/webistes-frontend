@@ -1,19 +1,26 @@
 import { Link, MetaProvider } from "@solidjs/meta";
-import { ParentProps, Suspense, createEffect, createResource } from "solid-js";
-
-import { Header } from "./header";
-import { Footer } from "./footer";
-import styles from "./layout.module.scss";
-import { fetchWebsite } from "./services/website";
-import _ from "lodash";
+import {
+  ParentProps,
+  Show,
+  Suspense,
+  createEffect,
+  createResource,
+} from "solid-js";
 import {
   applyTheme,
   argbFromHex,
   themeFromSourceColor,
 } from "@material/material-color-utilities";
+import _ from "lodash";
+
+import { ShopResponse } from "~/services/peoplesmarkets/commerce/v1/shop_pb";
+import { fetchWebsite } from "../services/website";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
+import styles from "./Layout.module.scss";
 
 export function Layout(props: ParentProps) {
-  const [website] = createResource(fetchWebsite);
+  const [website] = createResource<ShopResponse>(fetchWebsite);
 
   function isDarkTheme() {
     return false;
@@ -46,10 +53,14 @@ export function Layout(props: ParentProps) {
           href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300..600&family=Roboto:wght@300..600&display=swap"
         />
 
-        <Header />
+        <Show when={website()}>
+          <Header website={website()!} />
+        </Show>
+
         <main class={styles.Main}>
           <div class={styles.Content}>{props.children}</div>
         </main>
+
         <Footer />
       </Suspense>
     </MetaProvider>

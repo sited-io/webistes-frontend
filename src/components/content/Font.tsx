@@ -1,8 +1,8 @@
+import { Trans } from "@mbarzda/solid-i18next";
+import _ from "lodash";
 import { JSX, Show } from "solid-js";
 
 import styles from "./Font.module.scss";
-import _ from "lodash";
-import { Trans } from "@mbarzda/solid-i18next";
 
 type Props = {
   readonly type: "display" | "headline" | "title" | "label" | "body" | "detail";

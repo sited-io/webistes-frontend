@@ -1,21 +1,23 @@
+import { PartialMessage } from "@bufbuild/protobuf";
 import { Trans, useTransContext } from "@mbarzda/solid-i18next";
 import { useNavigate, useParams } from "@solidjs/router";
 import _ from "lodash";
-import {
-  For,
-  Show,
-  Suspense,
-  createEffect,
-  createResource,
-  createSignal,
-} from "solid-js";
+import { For, Show, Suspense, createResource, createSignal } from "solid-js";
+
+import { CancelConfirmationDialog } from "~/components/commerce/CancelConfirmationDialog";
+import { MediaListItem } from "~/components/commerce/MediaListItem";
+import { ResumeConfirmationDialog } from "~/components/commerce/ResumeConfirmationDialog";
 import { Font } from "~/components/content";
 import { ContentLoading } from "~/components/content/ContentLoading";
+import { MdList } from "~/components/content/MdList";
+import { MdListItem } from "~/components/content/MdListItem";
+import { MdButton } from "~/components/form/MdButton";
 import { Section } from "~/components/layout/Section";
+import { Pagination } from "~/components/navigation/Pagination";
+import { AuthGuard } from "~/components/user/AuthGuard";
 import { toLocaleDate } from "~/lib/datetime";
 import { buildUrl } from "~/lib/env";
 import { TKEYS } from "~/locales";
-import styles from "./[subscriptionId].module.scss";
 import { offerService } from "~/services/commerce";
 import { mediaService, mediaSubscriptionService } from "~/services/media";
 import {
@@ -23,17 +25,9 @@ import {
   MediaOrderByField,
 } from "~/services/peoplesmarkets/media/v1/media_pb";
 import { Direction } from "~/services/peoplesmarkets/ordering/v1/ordering_pb";
-import { MediaList } from "~/components/commerce/MediaList";
-import { MdButton } from "~/components/form/MdButton";
-import { CancelConfirmationDialog } from "~/components/commerce/CancelConfirmationDialog";
-import { ResumeConfirmationDialog } from "~/components/commerce/ResumeConfirmationDialog";
-import { userIndexPath } from "..";
-import { Pagination } from "~/components/navigation/Pagination";
-import { PartialMessage } from "@bufbuild/protobuf";
 import { PaginationRequest } from "~/services/peoplesmarkets/pagination/v1/pagination_pb";
-import { MdList } from "~/components/content/MdList";
-import { MdListItem } from "~/components/content/MdListItem";
-import { MediaListItem } from "~/components/commerce/MediaListItem";
+import { userIndexPath } from "..";
+import styles from "./[subscriptionId].module.scss";
 
 export const userSubscriptionPath = (subscriptionId: string) =>
   `/user/subscriptions/${subscriptionId}`;
@@ -70,18 +64,21 @@ export default function UserSubscription() {
 
   const [files] = createResource(
     () => [mediaSubscription()?.offerId, pagination()] as const,
-    async ([offerId, pagination]) =>
-      mediaService.listAccessible({
-        pagination,
-        filter: {
-          field: MediaFilterField.OFFER_ID,
-          query: offerId,
-        },
-        orderBy: {
-          field: MediaOrderByField.ORDERING,
-          direction: Direction.ASC,
-        },
-      })
+    async ([offerId, pagination]) => {
+      if (!_.isEmpty(offerId)) {
+        return mediaService.listAccessible({
+          pagination,
+          filter: {
+            field: MediaFilterField.OFFER_ID,
+            query: offerId,
+          },
+          orderBy: {
+            field: MediaOrderByField.ORDERING,
+            direction: Direction.ASC,
+          },
+        });
+      }
+    }
   );
 
   async function handleConfirmCancelSubscription() {
@@ -129,7 +126,7 @@ export default function UserSubscription() {
   }
 
   return (
-    <>
+    <AuthGuard>
       <Suspense fallback={<ContentLoading page />}>
         <Section>
           <div class={styles.SubscriptionDetail}>
@@ -245,6 +242,6 @@ export default function UserSubscription() {
           onClose={handleCloseResumeSubscription}
         />
       </Suspense>
-    </>
+    </AuthGuard>
   );
 }

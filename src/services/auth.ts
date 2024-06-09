@@ -1,9 +1,9 @@
 import type { APIEvent } from "@solidjs/start/server";
 import axios from "axios";
 import _ from "lodash";
-import { SessionData, getQuery, useSession } from "vinxi/http";
+import { getQuery, useSession } from "vinxi/http";
 
-import { buildUrl, getUrlFromRequestOrWindow } from "~/lib/env";
+import { buildUrl } from "~/lib/env";
 import { hashCodeVerifier } from "~/lib/string-manipulation";
 
 export type Session = {

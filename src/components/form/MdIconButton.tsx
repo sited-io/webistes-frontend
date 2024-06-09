@@ -22,7 +22,6 @@ export function MdIconButton(props: Props) {
 declare module "solid-js" {
   namespace JSX {
     interface IntrinsicElements {
-      "md-icon": Omit<Props, "icon">;
       "md-icon-button": Omit<Props, "icon">;
     }
   }

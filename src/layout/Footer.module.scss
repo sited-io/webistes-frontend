@@ -1,0 +1,19 @@
+.Footer {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--md-sys-color-tertiary-container);
+}
+
+.PoweredBy {
+  font: var(--font-body);
+  color: var(--md-sys-color-on-tertiary-container);
+}
+
+.MainLink {
+  font: var(--font-body);
+  color: var(--md-sys-color-on-tertiary-container);
+}

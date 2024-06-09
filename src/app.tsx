@@ -6,7 +6,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 import ICU from "i18next-icu";
 
 import "./app.scss";
-import { Layout } from "./layout";
+import { Layout } from "./layout/Layout";
 import { LOCALES } from "./locales";
 import "./material-icons.scss";
 import "./normalize.scss";

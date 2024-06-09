@@ -1,25 +1,26 @@
+import { Trans, useTransContext } from "@mbarzda/solid-i18next";
 import { Title } from "@solidjs/meta";
 import { useNavigate } from "@solidjs/router";
 import _ from "lodash";
 import { For, Show, Suspense, createResource } from "solid-js";
 
-import { MdButton } from "~/components/form/MdButton";
+import { MdIcon } from "~/components/assets/MdIcon";
 import { Font } from "~/components/content";
+import { Card } from "~/components/content/Card";
+import { ContentLoading } from "~/components/content/ContentLoading";
+import { MdButton } from "~/components/form/MdButton";
 import { Section } from "~/components/layout/Section";
+import { AuthGuard } from "~/components/user/AuthGuard";
+import { toLocaleDate } from "~/lib/datetime";
 import { buildUrl } from "~/lib/env";
 import { TKEYS } from "~/locales";
 import { fetchSession, signOut } from "~/services/auth";
+import { offerService } from "~/services/commerce";
 import { mediaSubscriptionService } from "~/services/media";
+import { OfferResponse } from "~/services/peoplesmarkets/commerce/v1/offer_pb";
 import { fetchWebsite } from "~/services/website";
 import styles from "./index.module.scss";
-import { Trans, useTransContext } from "@mbarzda/solid-i18next";
 import { userSubscriptionPath } from "./subscriptions/[subscriptionId]";
-import { toLocaleDate } from "~/lib/datetime";
-import { ContentLoading } from "~/components/content/ContentLoading";
-import { MdIcon } from "~/components/assets/MdIcon";
-import { Card } from "~/components/content/Card";
-import { offerService } from "~/services/commerce";
-import { OfferResponse } from "~/services/peoplesmarkets/commerce/v1/offer_pb";
 
 export const userIndexPath = "/user";
 export const userIndexUrl = () => buildUrl(userIndexPath);
@@ -29,14 +30,18 @@ export default function UserIndex() {
   const [trans] = useTransContext();
 
   const [website] = createResource(fetchWebsite);
+  const [session] = createResource(fetchSession);
 
   const [mediaSubscriptions, { refetch }] = createResource(
-    () => website()?.shopId,
-    async (shopId) =>
-      mediaSubscriptionService.listMediaSubscriptions({
-        shopId,
-        isAccessible: true,
-      })
+    () => [website()?.shopId, session()?.isAuthenticated] as const,
+    async ([shopId, isAuthenticated]) => {
+      if (isAuthenticated) {
+        return mediaSubscriptionService.listMediaSubscriptions({
+          shopId,
+          isAccessible: true,
+        });
+      }
+    }
   );
 
   const [offers] = createResource(
@@ -63,7 +68,7 @@ export default function UserIndex() {
   }
 
   return (
-    <>
+    <AuthGuard>
       <Title>{website()?.name} | User</Title>
 
       <Section>
@@ -150,6 +155,6 @@ export default function UserIndex() {
           <Font type="body" key={TKEYS.user["sign-out"]} />
         </MdButton>
       </Section>
-    </>
+    </AuthGuard>
   );
 }

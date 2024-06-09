@@ -16,21 +16,25 @@ type Props = {
   readonly danger?: boolean | undefined;
   readonly square?: boolean | undefined;
   readonly wide?: boolean | undefined;
+  readonly small?: boolean | undefined;
   readonly trailingIcon?: boolean | undefined;
   readonly onClick?: (_event: any) => void;
   readonly children: SolidJSX.Element;
 };
 
 export function MdButton(props: Props) {
+  const classList = {
+    [styles.Danger]: Boolean(props.danger),
+    [styles.Square]: Boolean(props.square),
+    [styles.Wide]: Boolean(props.wide),
+    [styles.Small]: Boolean(props.small),
+  };
+
   return (
     <Switch
       fallback={
         <md-filled-button
-          classList={{
-            [styles.Danger]: Boolean(props.danger),
-            [styles.Square]: Boolean(props.square),
-            [styles.Wide]: Boolean(props.wide),
-          }}
+          classList={classList}
           type={props.submit ? "submit" : "button"}
           disabled={Boolean(props.disabled)}
           trailing-icon={props.trailingIcon}
@@ -43,11 +47,7 @@ export function MdButton(props: Props) {
     >
       <Match when={props.type === "elevated"}>
         <md-elevated-button
-          classList={{
-            [styles.Danger]: Boolean(props.danger),
-            [styles.Square]: Boolean(props.square),
-            [styles.Wide]: Boolean(props.wide),
-          }}
+          classList={classList}
           type={props.submit ? "submit" : "button"}
           disabled={Boolean(props.disabled)}
           trailing-icon={props.trailingIcon}
@@ -59,11 +59,7 @@ export function MdButton(props: Props) {
       </Match>
       <Match when={props.type === "filled"}>
         <md-filled-button
-          classList={{
-            [styles.Danger]: Boolean(props.danger),
-            [styles.Square]: Boolean(props.square),
-            [styles.Wide]: Boolean(props.wide),
-          }}
+          classList={classList}
           type={props.submit ? "submit" : "button"}
           disabled={Boolean(props.disabled)}
           trailing-icon={props.trailingIcon}
@@ -75,11 +71,7 @@ export function MdButton(props: Props) {
       </Match>
       <Match when={props.type === "filled-tonal"}>
         <md-filled-tonal-button
-          classList={{
-            [styles.Danger]: Boolean(props.danger),
-            [styles.Square]: Boolean(props.square),
-            [styles.Wide]: Boolean(props.wide),
-          }}
+          classList={classList}
           type={props.submit ? "submit" : "button"}
           disabled={Boolean(props.disabled)}
           trailing-icon={props.trailingIcon}
@@ -91,11 +83,7 @@ export function MdButton(props: Props) {
       </Match>
       <Match when={props.type === "outlined"}>
         <md-outlined-button
-          classList={{
-            [styles.Danger]: Boolean(props.danger),
-            [styles.Square]: Boolean(props.square),
-            [styles.Wide]: Boolean(props.wide),
-          }}
+          classList={classList}
           type={props.submit ? "submit" : "button"}
           disabled={Boolean(props.disabled)}
           trailing-icon={props.trailingIcon}
@@ -107,11 +95,7 @@ export function MdButton(props: Props) {
       </Match>
       <Match when={props.type === "text"}>
         <md-text-button
-          classList={{
-            [styles.Danger]: Boolean(props.danger),
-            [styles.Square]: Boolean(props.square),
-            [styles.Wide]: Boolean(props.wide),
-          }}
+          classList={classList}
           type={props.submit ? "submit" : "button"}
           disabled={Boolean(props.disabled)}
           trailing-icon={props.trailingIcon}

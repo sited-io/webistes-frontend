@@ -10,6 +10,7 @@ import { TKEYS } from "~/locales";
 import { signOut } from "~/services/auth";
 
 import { fetchWebsite } from "~/services/website";
+import { AuthGuard } from "~/components/user/AuthGuard";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export default function Settings() {
   }
 
   return (
-    <>
+    <AuthGuard>
       <Title>{website()?.name} | User Settings</Title>
 
       <Section>
@@ -34,6 +35,6 @@ export default function Settings() {
           <Font type="body" key={TKEYS.user["sign-out"]} />
         </MdButton>
       </Section>
-    </>
+    </AuthGuard>
   );
 }
