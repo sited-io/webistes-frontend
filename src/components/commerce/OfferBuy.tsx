@@ -212,7 +212,7 @@ export function OfferBuy(props: Props) {
 
         <Show when={actionState() === "already-subscribed"}>
           <Font type="label" key={TKEYS.subscription["already-subscribed"]} />
-          <MdButton type="filled" wide href={userIndexPath}>
+          <MdButton type="filled" square wide href={userIndexPath}>
             <Trans key={TKEYS.media.Inventory} />
           </MdButton>
         </Show>
