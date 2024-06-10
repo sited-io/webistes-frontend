@@ -17,24 +17,17 @@
 }
 
 .MainLink {
-  width: fit-content;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-
-  font: var(--font-body);
+  margin: 0 8px;
   color: var(--md-sys-color-on-tertiary-container);
+  font: var(--font-label);
 }
 
 .MainLink:hover {
-  background-color: rgba(0, 0, 0, 0);
-  background: var(--hovered-background);
   cursor: pointer;
 }
 
 .MainLogo {
   height: 20px;
-  margin: 0 8px;
   user-select: none;
 }
 

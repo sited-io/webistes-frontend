@@ -19,7 +19,8 @@ export function Footer(props: ParentProps) {
           href={import.meta.env.VITE_MAIN_WEBSITE_URL}
           target="_blank"
         >
-          <SitedIoLogo class={styles.MainLogo} />
+          {/* <SitedIoLogo class={styles.MainLogo} /> */}
+          {mainWebsiteDisplay()}
         </A>
       </p>
     </div>

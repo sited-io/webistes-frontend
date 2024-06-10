@@ -45,15 +45,9 @@ export function Layout(props: ParentProps) {
         {/* TODO: allow custom icon */}
         <Link rel="icon" href="/favicon.ico" />
 
-        <Link rel="preconnect" href="https://fonts.googleapis.com" />
-        <Link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin="anonymous"
-        />
         <Link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300..600&family=Roboto:wght@300..600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600&family=Noto+Sans:wght@300;400;500;600"
         />
 
         <Show when={website()}>
