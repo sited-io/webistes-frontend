@@ -8,8 +8,7 @@ import {
   createSignal,
 } from "solid-js";
 
-import { indexUrl } from "~/routes";
-import { userIndexPath } from "~/routes/user";
+import { userIndexPath, userIndexUrl } from "~/routes/user";
 import { SignInPrompt, fetchSession, signIn } from "~/services/auth";
 import { mediaSubscriptionService } from "~/services/media";
 import { stripeService } from "~/services/payment";
@@ -20,9 +19,9 @@ import {
 import { PriceType } from "~/services/peoplesmarkets/commerce/v1/price_pb";
 import { fetchWebsite } from "~/services/website";
 import { TKEYS } from "../../locales";
-import { MdButton } from "../form/MdButton";
 import { Font } from "../content";
 import { ContentLoading } from "../content/ContentLoading";
+import { MdButton } from "../form/MdButton";
 import styles from "./OfferBuy.module.scss";
 
 type ActionState =
@@ -41,7 +40,7 @@ export function OfferBuy(props: Props) {
   const [website] = createResource(fetchWebsite);
   const [session] = createResource(fetchSession);
 
-  const [actionState, setActionState] = createSignal("loading");
+  const [actionState, setActionState] = createSignal<ActionState>("loading");
 
   const [mediaSubscription] = createResource(
     () =>
@@ -136,7 +135,7 @@ export function OfferBuy(props: Props) {
       const link = await stripeService.createCheckoutSession({
         offerId,
         cancelUrl: location.href,
-        successUrl: indexUrl.toString(),
+        successUrl: userIndexUrl().toString(),
       });
 
       window.location.href = link;
