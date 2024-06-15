@@ -33,7 +33,7 @@ export default function UserIndex() {
   const [session] = createResource(fetchSession);
 
   const [mediaSubscriptions, { refetch }] = createResource(
-    () => [website()?.shopId, session()?.isAuthenticated] as const,
+    () => [website()?.websiteId, session()?.isAuthenticated] as const,
     async ([shopId, isAuthenticated]) => {
       if (isAuthenticated) {
         return mediaSubscriptionService.listMediaSubscriptions({

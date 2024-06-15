@@ -58,7 +58,7 @@ export function OfferBuy(props: Props) {
   );
 
   const [stripeAccount] = createResource(
-    () => website()?.shopId,
+    () => website()?.websiteId,
     async (shopId) => {
       let stripeAccount = {
         shopId,
@@ -87,9 +87,9 @@ export function OfferBuy(props: Props) {
     }
 
     if (!stripeAccount()?.enabled) {
-      if (!_.isEmpty(website()?.contactEmailAddress)) {
-        return setActionState("contact-email");
-      }
+      // if (!_.isEmpty(website()?.contactEmailAddress)) {
+      //   return setActionState("contact-email");
+      // }
       return setActionState("no-payment-method");
     }
 
@@ -108,13 +108,13 @@ export function OfferBuy(props: Props) {
     return setActionState("buy");
   });
 
-  function contactEmailAddress() {
-    const shop = website();
-    if (!_.isNil(shop?.contactEmailAddress)) {
-      return shop.contactEmailAddress;
-    }
-    return "";
-  }
+  // function contactEmailAddress() {
+  //   const shop = website();
+  //   if (!_.isNil(shop?.contactEmailAddress)) {
+  //     return shop.contactEmailAddress;
+  //   }
+  //   return "";
+  // }
 
   async function handleSignIn(prompt?: SignInPrompt) {
     const clientId = website()?.clientId;
@@ -186,7 +186,7 @@ export function OfferBuy(props: Props) {
           </MdButton>
         </Show>
 
-        <Show when={actionState() === "contact-email"}>
+        {/* <Show when={actionState() === "contact-email"}>
           <MdButton
             type="filled"
             square
@@ -195,7 +195,7 @@ export function OfferBuy(props: Props) {
           >
             <Trans key={TKEYS.offer["contact-shop"]} />
           </MdButton>
-        </Show>
+        </Show> */}
 
         <Show when={actionState() === "buy"}>
           <MdButton type="filled" square wide onClick={handleCheckout}>

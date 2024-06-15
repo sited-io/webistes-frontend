@@ -13,7 +13,7 @@ export const indexUrl = () => buildUrl(indexPath);
 export default function Index() {
   const [website] = createResource(fetchWebsite);
   const [offers] = createResource(
-    () => website()?.shopId,
+    () => website()?.websiteId,
     async (websiteId: string) => offerService.listOffers({ shopId: websiteId })
   );
 
