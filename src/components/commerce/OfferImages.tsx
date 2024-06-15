@@ -5,7 +5,7 @@ import styles from "./OfferImages.module.scss";
 import {
   OfferImageResponse,
   OfferResponse,
-} from "~/services/peoplesmarkets/commerce/v1/offer_pb";
+} from "~/services/sited_io/commerce/v1/offer_pb";
 
 type Props = {
   readonly offer: () => OfferResponse;

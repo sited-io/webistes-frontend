@@ -3,7 +3,7 @@ import { createSignal } from "solid-js";
 
 import { TKEYS } from "../../locales";
 import styles from "./MediaListItem.module.scss";
-import { MediaResponse } from "~/services/peoplesmarkets/media/v1/media_pb";
+import { MediaResponse } from "~/services/sited_io/media/v1/media_pb";
 import { MdButton } from "../form/MdButton";
 import { DownloadMediaDialog } from "./DownloadMediaDialog";
 import { Font } from "../content";

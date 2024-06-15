@@ -6,7 +6,7 @@ import { TKEYS } from "../../locales";
 import { Font } from "../content";
 import { MdDialog } from "../layout/MdDialog";
 import styles from "./DownloadMediaDialog.module.scss";
-import { MediaResponse } from "~/services/peoplesmarkets/media/v1/media_pb";
+import { MediaResponse } from "~/services/sited_io/media/v1/media_pb";
 import { MdButton } from "../form/MdButton";
 import { mediaService } from "~/services/media";
 import { ContentLoading } from "../content/ContentLoading";

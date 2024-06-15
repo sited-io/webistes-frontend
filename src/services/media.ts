@@ -3,21 +3,21 @@ import { createPromiseClient } from "@connectrpc/connect";
 import { createGrpcWebTransport } from "@connectrpc/connect-web";
 import _ from "lodash";
 import { withAuthHeader } from "./auth";
-import { MediaSubscriptionService } from "./peoplesmarkets/media/v1/media_subscription_connect";
+import { MediaSubscriptionService } from "./sited_io/media/v1/media_subscription_connect";
 import {
   CancelMediaSubscriptionRequest,
   GetMediaSubscriptionRequest,
   ListMediaSubscriptionsRequest,
   MediaSubscriptionResponse,
   ResumeMediaSubscriptionRequest,
-} from "./peoplesmarkets/media/v1/media_subscription_pb";
+} from "./sited_io/media/v1/media_subscription_pb";
 import {
   DownloadMediaRequest,
   ListAccessibleMediaRequest,
   MediaResponse,
-} from "./peoplesmarkets/media/v1/media_pb";
-import { MediaService } from "./peoplesmarkets/media/v1/media_connect";
-import { PaginationResponse } from "./peoplesmarkets/pagination/v1/pagination_pb";
+} from "./sited_io/media/v1/media_pb";
+import { MediaService } from "./sited_io/media/v1/media_connect";
+import { PaginationResponse } from "./sited_io/pagination/v1/pagination_pb";
 
 const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
 

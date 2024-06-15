@@ -3,7 +3,7 @@ import _ from "lodash";
 import { Show, createResource, createSignal, onMount } from "solid-js";
 
 import { indexPath } from "~/routes";
-import { ShopResponse } from "~/services/peoplesmarkets/commerce/v1/shop_pb";
+import { ShopResponse } from "~/services/sited_io/commerce/v1/shop_pb";
 import { Font } from "../components/content/Font";
 import { MdButton } from "../components/form/MdButton";
 import { MdIconButton } from "../components/form/MdIconButton";

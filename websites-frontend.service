@@ -1,5 +1,5 @@
 [Unit]
-Description=Peoplesmarkets websites-frontend service
+Description=Sited.io websites-frontend service
 After=network.target
 
 [Service]

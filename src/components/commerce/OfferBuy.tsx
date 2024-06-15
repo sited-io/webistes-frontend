@@ -15,8 +15,8 @@ import { stripeService } from "~/services/payment";
 import {
   OfferResponse,
   OfferType,
-} from "~/services/peoplesmarkets/commerce/v1/offer_pb";
-import { PriceType } from "~/services/peoplesmarkets/commerce/v1/price_pb";
+} from "~/services/sited_io/commerce/v1/offer_pb";
+import { PriceType } from "~/services/sited_io/commerce/v1/price_pb";
 import { fetchWebsite } from "~/services/website";
 import { TKEYS } from "../../locales";
 import { Font } from "../content";

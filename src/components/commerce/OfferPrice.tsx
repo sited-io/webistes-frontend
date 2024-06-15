@@ -4,7 +4,7 @@ import { Show } from "solid-js";
 
 import { centsToDecimal } from "~/lib/string-manipulation";
 import styles from "./OfferPrice.module.scss";
-import { OfferResponse } from "~/services/peoplesmarkets/commerce/v1/offer_pb";
+import { OfferResponse } from "~/services/sited_io/commerce/v1/offer_pb";
 import { TKEYS } from "~/locales";
 
 type Props = {

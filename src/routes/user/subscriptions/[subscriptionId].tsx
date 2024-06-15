@@ -23,9 +23,9 @@ import { mediaService, mediaSubscriptionService } from "~/services/media";
 import {
   MediaFilterField,
   MediaOrderByField,
-} from "~/services/peoplesmarkets/media/v1/media_pb";
-import { Direction } from "~/services/peoplesmarkets/ordering/v1/ordering_pb";
-import { PaginationRequest } from "~/services/peoplesmarkets/pagination/v1/pagination_pb";
+} from "~/services/sited_io/media/v1/media_pb";
+import { Direction } from "~/services/sited_io/ordering/v1/ordering_pb";
+import { PaginationRequest } from "~/services/sited_io/pagination/v1/pagination_pb";
 import { userIndexPath } from "..";
 import styles from "./[subscriptionId].module.scss";
 

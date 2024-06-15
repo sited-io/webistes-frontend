@@ -17,7 +17,7 @@ import { TKEYS } from "~/locales";
 import { fetchSession, signOut } from "~/services/auth";
 import { offerService } from "~/services/commerce";
 import { mediaSubscriptionService } from "~/services/media";
-import { OfferResponse } from "~/services/peoplesmarkets/commerce/v1/offer_pb";
+import { OfferResponse } from "~/services/sited_io/commerce/v1/offer_pb";
 import { fetchWebsite } from "~/services/website";
 import styles from "./index.module.scss";
 import { userSubscriptionPath } from "./subscriptions/[subscriptionId]";

@@ -3,12 +3,12 @@ import { createPromiseClient } from "@connectrpc/connect";
 import { createGrpcWebTransport } from "@connectrpc/connect-web";
 import _ from "lodash";
 
-import { OfferService } from "./peoplesmarkets/commerce/v1/offer_connect";
+import { OfferService } from "./sited_io/commerce/v1/offer_connect";
 import {
   GetOfferRequest,
   ListOffersRequest,
   OfferResponse,
-} from "./peoplesmarkets/commerce/v1/offer_pb";
+} from "./sited_io/commerce/v1/offer_pb";
 
 const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
 

@@ -2,7 +2,7 @@ import { For } from "solid-js";
 
 import styles from "./MediaList.module.scss";
 import { MediaListItem } from "./MediaListItem";
-import { MediaResponse } from "~/services/peoplesmarkets/media/v1/media_pb";
+import { MediaResponse } from "~/services/sited_io/media/v1/media_pb";
 
 type Props = {
   medias: () => MediaResponse[] | undefined;

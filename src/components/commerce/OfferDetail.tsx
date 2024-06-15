@@ -5,7 +5,7 @@ import { Section } from "../layout/Section";
 import { OfferBuy } from "./OfferBuy";
 import styles from "./OfferDetail.module.scss";
 import { OfferPrice } from "./OfferPrice";
-import { OfferResponse } from "~/services/peoplesmarkets/commerce/v1/offer_pb";
+import { OfferResponse } from "~/services/sited_io/commerce/v1/offer_pb";
 import { OfferImages } from "./OfferImages";
 
 type Props = {

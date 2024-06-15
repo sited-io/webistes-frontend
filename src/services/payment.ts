@@ -1,12 +1,12 @@
 import { createPromiseClient } from "@connectrpc/connect";
-import { StripeService } from "./peoplesmarkets/payment/v1/stripe_connect";
+import { StripeService } from "./sited_io/payment/v1/stripe_connect";
 import { createGrpcWebTransport } from "@connectrpc/connect-web";
 import { PartialMessage, toPlainMessage } from "@bufbuild/protobuf";
 import {
   CreateCheckoutSessionRequest,
   GetAccountRequest,
   StripeAccount,
-} from "./peoplesmarkets/payment/v1/stripe_pb";
+} from "./sited_io/payment/v1/stripe_pb";
 import _ from "lodash";
 import { withAuthHeader } from "./auth";
 

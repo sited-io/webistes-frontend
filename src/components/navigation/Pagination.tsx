@@ -4,7 +4,7 @@ import styles from "./Pagination.module.scss";
 import {
   PaginationRequest,
   PaginationResponse,
-} from "~/services/peoplesmarkets/pagination/v1/pagination_pb";
+} from "~/services/sited_io/pagination/v1/pagination_pb";
 import { PartialMessage } from "@bufbuild/protobuf";
 import { MdIconButton } from "../form/MdIconButton";
 
