@@ -1,23 +1,35 @@
-import { Title } from "@solidjs/meta";
 import { useParams } from "@solidjs/router";
-import { createResource } from "solid-js";
+import { Match, Switch, createResource } from "solid-js";
 
-import { websiteService } from "~/services/website";
+import { ShopPage } from "~/components/pages/ShopPage";
+import { StaticPage } from "~/components/pages/StaticPage";
+import { PageType } from "~/services/sited_io/websites/v1/page_pb";
+import { pageService, websiteService } from "~/services/website";
 
 export default function Index() {
   const [website] = createResource(websiteService.getWebiste);
 
-  const { page } = useParams();
+  const params = useParams();
+
+  const [page] = createResource(
+    () => [website()?.websiteId, params?.page] as const,
+    async ([websiteId, pathParam]) =>
+      pageService.getPage({
+        websiteId,
+        path: "/" + pathParam,
+      })
+  );
 
   return (
     <>
-      <Title>
-        {website()?.name} | {page}
-      </Title>
-
-      <p>
-        {website()?.name} | {page}
-      </p>
+      <Switch>
+        <Match when={page()?.pageType === PageType.STATIC}>
+          <StaticPage website={website} page={page} />
+        </Match>
+        <Match when={page()?.pageType === PageType.SHOP}>
+          <ShopPage website={website} page={page} />
+        </Match>
+      </Switch>
     </>
   );
 }
