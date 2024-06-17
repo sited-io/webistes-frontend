@@ -153,6 +153,11 @@ export class ShopResponse extends Message<ShopResponse> {
    */
   clientId?: string;
 
+  /**
+   * @generated from field: string website_id = 15;
+   */
+  websiteId = "";
+
   constructor(data?: PartialMessage<ShopResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -175,6 +180,7 @@ export class ShopResponse extends Message<ShopResponse> {
     { no: 12, name: "is_active", kind: "scalar", T: 8 /* ScalarType.BOOL */ },
     { no: 13, name: "contact_email_address", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 14, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 15, name: "website_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): ShopResponse {
@@ -321,6 +327,11 @@ export class GetShopRequest extends Message<GetShopRequest> {
    */
   owner?: string;
 
+  /**
+   * @generated from field: optional string website_id = 6;
+   */
+  websiteId?: string;
+
   constructor(data?: PartialMessage<GetShopRequest>) {
     super();
     proto3.util.initPartial(data, this);
@@ -334,6 +345,7 @@ export class GetShopRequest extends Message<GetShopRequest> {
     { no: 3, name: "slug", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 4, name: "domain", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
     { no: 5, name: "owner", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
+    { no: 6, name: "website_id", kind: "scalar", T: 9 /* ScalarType.STRING */, opt: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): GetShopRequest {

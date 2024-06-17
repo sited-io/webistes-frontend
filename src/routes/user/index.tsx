@@ -15,7 +15,7 @@ import { toLocaleDate } from "~/lib/datetime";
 import { buildUrl } from "~/lib/env";
 import { TKEYS } from "~/locales";
 import { fetchSession, signOut } from "~/services/auth";
-import { offerService } from "~/services/commerce";
+import { offerService, shopService } from "~/services/commerce";
 import { mediaSubscriptionService } from "~/services/media";
 import { OfferResponse } from "~/services/sited_io/commerce/v1/offer_pb";
 import { websiteService } from "~/services/website";
@@ -29,11 +29,15 @@ export default function UserIndex() {
   const navigate = useNavigate();
   const [trans] = useTransContext();
 
-  const [website] = createResource(websiteService.getWebiste);
   const [session] = createResource(fetchSession);
+  const [website] = createResource(websiteService.getWebiste);
+  const [shop] = createResource(
+    () => website()?.websiteId,
+    async (websiteId: string) => shopService.getShop({ websiteId })
+  );
 
   const [mediaSubscriptions, { refetch }] = createResource(
-    () => [website()?.websiteId, session()?.isAuthenticated] as const,
+    () => [shop()?.shopId, session()?.isAuthenticated] as const,
     async ([shopId, isAuthenticated]) => {
       if (isAuthenticated) {
         return mediaSubscriptionService.listMediaSubscriptions({
