@@ -23,6 +23,7 @@ import { Font } from "../content";
 import { ContentLoading } from "../content/ContentLoading";
 import { MdButton } from "../form/MdButton";
 import styles from "./OfferBuy.module.scss";
+import { shopService } from "~/services/commerce";
 
 type ActionState =
   | "already-subscribed"
@@ -37,10 +38,15 @@ type Props = {
 };
 
 export function OfferBuy(props: Props) {
-  const [website] = createResource(websiteService.getWebiste);
   const [session] = createResource(fetchSession);
+  const [website] = createResource(websiteService.getWebiste);
 
   const [actionState, setActionState] = createSignal<ActionState>("loading");
+
+  const [shop] = createResource(
+    () => website()?.websiteId,
+    async (websiteId: string) => shopService.getShop({ websiteId })
+  );
 
   const [mediaSubscription] = createResource(
     () =>
@@ -58,7 +64,7 @@ export function OfferBuy(props: Props) {
   );
 
   const [stripeAccount] = createResource(
-    () => website()?.websiteId,
+    () => shop()?.shopId,
     async (shopId) => {
       let stripeAccount = {
         shopId,
