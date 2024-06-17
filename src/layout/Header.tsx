@@ -1,9 +1,9 @@
 import { A, useMatch, useNavigate } from "@solidjs/router";
 import _ from "lodash";
-import { Show, createResource, createSignal, onMount } from "solid-js";
+import { For, Show, createResource, createSignal, onMount } from "solid-js";
 
 import { indexPath } from "~/routes";
-import { ShopResponse } from "~/services/sited_io/commerce/v1/shop_pb";
+import { WebsiteResponse } from "~/services/sited_io/websites/v1/website_pb";
 import { Font } from "../components/content/Font";
 import { MdButton } from "../components/form/MdButton";
 import { MdIconButton } from "../components/form/MdIconButton";
@@ -15,7 +15,7 @@ import { NavigationSlider } from "./NavigationSlider";
 import { NavigationSliderItem } from "./NavigationSliderItem";
 
 type Props = {
-  website: ShopResponse;
+  website: WebsiteResponse;
 };
 
 export function Header(props: Props) {
@@ -85,12 +85,12 @@ export function Header(props: Props) {
 
           <A class={styles.MainLink} href="/">
             <Show
-              when={!_.isEmpty(props.website.customization?.logoImageLightUrl)}
+              when={!_.isEmpty(props.website.customization?.logoImageUrl)}
               fallback={props.website.name}
             >
               <img
                 class={styles.Logo}
-                src={props.website.customization?.logoImageLightUrl}
+                src={props.website.customization?.logoImageUrl}
                 alt={props.website.name + " logo"}
               />
             </Show>
@@ -99,15 +99,19 @@ export function Header(props: Props) {
 
         <div class={styles.HeaderRight}>
           <div class={styles.Links}>
-            <A
-              class={styles.Link}
-              classList={{
-                [styles.LinkActive]: Boolean(useMatch(() => "/")()),
-              }}
-              href="/"
-            >
-              Home
-            </A>
+            <For each={props.website.pages}>
+              {(page) => (
+                <A
+                  class={styles.Link}
+                  classList={{
+                    [styles.LinkActive]: Boolean(useMatch(() => "/")()),
+                  }}
+                  href="/"
+                >
+                  {page.title}
+                </A>
+              )}
+            </For>
           </div>
 
           <Show
@@ -127,13 +131,18 @@ export function Header(props: Props) {
         show={showNavigationSlider()}
         onClose={handleCloseNavigationSlider}
       >
-        <NavigationSliderItem
-          type="body"
-          active={Boolean(useMatch(() => "/")())}
-          icon="home"
-          label="Home"
-          onClick={() => handleNavigate(indexPath)}
-        />
+        <For each={props.website.pages}>
+          {(page) => (
+            <NavigationSliderItem
+              type="body"
+              active={Boolean(useMatch(() => page.path)())}
+              icon="home"
+              label={page.title}
+              onClick={() => handleNavigate(page.path)}
+            />
+          )}
+        </For>
+
         <NavigationSliderItem
           type="body"
           active={Boolean(useMatch(() => "/user")())}

@@ -18,7 +18,7 @@ import { fetchSession, signOut } from "~/services/auth";
 import { offerService } from "~/services/commerce";
 import { mediaSubscriptionService } from "~/services/media";
 import { OfferResponse } from "~/services/sited_io/commerce/v1/offer_pb";
-import { fetchWebsite } from "~/services/website";
+import { websiteService } from "~/services/website";
 import styles from "./index.module.scss";
 import { userSubscriptionPath } from "./subscriptions/[subscriptionId]";
 
@@ -29,7 +29,7 @@ export default function UserIndex() {
   const navigate = useNavigate();
   const [trans] = useTransContext();
 
-  const [website] = createResource(fetchWebsite);
+  const [website] = createResource(websiteService.getWebiste);
   const [session] = createResource(fetchSession);
 
   const [mediaSubscriptions, { refetch }] = createResource(

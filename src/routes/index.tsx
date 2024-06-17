@@ -4,17 +4,38 @@ import { For, Show, createResource } from "solid-js";
 import { OfferDetail } from "~/components/commerce/OfferDetail";
 import { Border } from "~/components/layout/Border";
 import { buildUrl } from "~/lib/env";
-import { offerService } from "~/services/commerce";
-import { fetchWebsite } from "~/services/website";
+import { offerService, shopService } from "~/services/commerce";
+import {
+  PageResponse,
+  PageType,
+} from "~/services/sited_io/websites/v1/page_pb";
+import { websiteService, pageService } from "~/services/website";
 
 export const indexPath = "/";
 export const indexUrl = () => buildUrl(indexPath);
 
 export default function Index() {
-  const [website] = createResource(fetchWebsite);
-  const [offers] = createResource(
+  const [website] = createResource(websiteService.getWebiste);
+  const [page] = createResource(
     () => website()?.websiteId,
-    async (websiteId: string) => offerService.listOffers({ shopId: websiteId })
+    async (websiteId: string) =>
+      pageService.getPage({
+        websiteId,
+        path: "/",
+      })
+  );
+  const [content] = createResource(
+    () => page(),
+    async (page: PageResponse) => {
+      if (page.pageType === PageType.SHOP) {
+        return shopService.getShop({ shopId: page.contentId });
+      }
+    }
+  );
+
+  const [offers] = createResource(
+    () => content()?.shopId,
+    async (shopId: string) => offerService.listOffers({ shopId })
   );
 
   function isLastItem(index: number) {

@@ -9,13 +9,13 @@ import { Section } from "~/components/layout/Section";
 import { TKEYS } from "~/locales";
 import { signOut } from "~/services/auth";
 
-import { fetchWebsite } from "~/services/website";
+import { websiteService } from "~/services/website";
 import { AuthGuard } from "~/components/user/AuthGuard";
 
 export default function Settings() {
   const navigate = useNavigate();
 
-  const [website] = createResource(fetchWebsite);
+  const [website] = createResource(websiteService.getWebiste);
 
   async function handleSignOut() {
     const signOutUrl = await signOut();

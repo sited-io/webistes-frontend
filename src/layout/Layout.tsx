@@ -13,30 +13,31 @@ import {
 } from "@material/material-color-utilities";
 import _ from "lodash";
 
-import { ShopResponse } from "~/services/sited_io/commerce/v1/shop_pb";
 import { fetchWebsite } from "../services/website";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import styles from "./Layout.module.scss";
+import { WebsiteResponse } from "~/services/sited_io/websites/v1/website_pb";
+
+const DEFAULT_PRIMARY_COLOR = "#410002";
 
 export function Layout(props: ParentProps) {
-  const [website] = createResource<ShopResponse>(fetchWebsite);
+  const [website] = createResource<WebsiteResponse>(fetchWebsite);
 
   function isDarkTheme() {
     return false;
   }
 
   createEffect(() => {
-    const primaryColor = website()?.customization?.primaryColor;
-    if (!_.isNil(primaryColor)) {
-      const customTheme = themeFromSourceColor(argbFromHex(primaryColor), [
-        // { name: "custom-1", value: argbFromHex(primaryColor), blend: true },
-      ]);
-      applyTheme(customTheme, {
-        target: document.body,
-        dark: isDarkTheme(),
-      });
-    }
+    const primaryColor =
+      website()?.customization?.primaryColor || DEFAULT_PRIMARY_COLOR;
+    const customTheme = themeFromSourceColor(argbFromHex(primaryColor), [
+      // { name: "custom-1", value: argbFromHex("#ff0000"), blend: true },
+    ]);
+    applyTheme(customTheme, {
+      target: document.body,
+      dark: isDarkTheme(),
+    });
   });
 
   return (

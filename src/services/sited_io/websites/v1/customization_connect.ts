@@ -3,7 +3,7 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { PutCustomizationRequest, PutCustomizationResponse } from "./customization_pb.js";
+import { PutLogoImageRequest, PutLogoImageResponse, RemoveLogoImageRequest, RemoveLogoImageResponse, UpdateCustomizationRequest, UpdateCustomizationResponse } from "./customization_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
@@ -13,12 +13,30 @@ export const CustomizationService = {
   typeName: "sited_io.websites.v1.CustomizationService",
   methods: {
     /**
-     * @generated from rpc sited_io.websites.v1.CustomizationService.PutCustomization
+     * @generated from rpc sited_io.websites.v1.CustomizationService.UpdateCustomization
      */
-    putCustomization: {
-      name: "PutCustomization",
-      I: PutCustomizationRequest,
-      O: PutCustomizationResponse,
+    updateCustomization: {
+      name: "UpdateCustomization",
+      I: UpdateCustomizationRequest,
+      O: UpdateCustomizationResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc sited_io.websites.v1.CustomizationService.PutLogoImage
+     */
+    putLogoImage: {
+      name: "PutLogoImage",
+      I: PutLogoImageRequest,
+      O: PutLogoImageResponse,
+      kind: MethodKind.Unary,
+    },
+    /**
+     * @generated from rpc sited_io.websites.v1.CustomizationService.RemoveLogoImage
+     */
+    removeLogoImage: {
+      name: "RemoveLogoImage",
+      I: RemoveLogoImageRequest,
+      O: RemoveLogoImageResponse,
       kind: MethodKind.Unary,
     },
   }

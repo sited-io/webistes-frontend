@@ -7,6 +7,7 @@ import type { BinaryReadOptions, FieldList, JsonReadOptions, JsonValue, PartialM
 import { Message, proto3, protoInt64 } from "@bufbuild/protobuf";
 import { CustomizationResponse } from "./customization_pb.js";
 import { DomainResponse } from "./domain_pb.js";
+import { PageResponse } from "./page_pb.js";
 import { PaginationRequest, PaginationResponse } from "../../pagination/v1/pagination_pb.js";
 
 /**
@@ -53,6 +54,11 @@ export class WebsiteResponse extends Message<WebsiteResponse> {
    */
   domains: DomainResponse[] = [];
 
+  /**
+   * @generated from field: repeated sited_io.websites.v1.PageResponse pages = 9;
+   */
+  pages: PageResponse[] = [];
+
   constructor(data?: PartialMessage<WebsiteResponse>) {
     super();
     proto3.util.initPartial(data, this);
@@ -69,6 +75,7 @@ export class WebsiteResponse extends Message<WebsiteResponse> {
     { no: 6, name: "client_id", kind: "scalar", T: 9 /* ScalarType.STRING */ },
     { no: 7, name: "customization", kind: "message", T: CustomizationResponse },
     { no: 8, name: "domains", kind: "message", T: DomainResponse, repeated: true },
+    { no: 9, name: "pages", kind: "message", T: PageResponse, repeated: true },
   ]);
 
   static fromBinary(bytes: Uint8Array, options?: Partial<BinaryReadOptions>): WebsiteResponse {
