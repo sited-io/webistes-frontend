@@ -13,7 +13,7 @@ import {
 } from "@material/material-color-utilities";
 import _ from "lodash";
 
-import { fetchWebsite } from "../services/website";
+import { websiteService } from "../services/website";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import styles from "./Layout.module.scss";
@@ -22,7 +22,7 @@ import { WebsiteResponse } from "~/services/sited_io/websites/v1/website_pb";
 const DEFAULT_PRIMARY_COLOR = "#410002";
 
 export function Layout(props: ParentProps) {
-  const [website] = createResource<WebsiteResponse>(fetchWebsite);
+  const [website] = createResource<WebsiteResponse>(websiteService.getWebiste);
 
   function isDarkTheme() {
     return false;

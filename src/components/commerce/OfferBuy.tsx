@@ -17,7 +17,7 @@ import {
   OfferType,
 } from "~/services/sited_io/commerce/v1/offer_pb";
 import { PriceType } from "~/services/sited_io/commerce/v1/price_pb";
-import { fetchWebsite } from "~/services/website";
+import { websiteService } from "~/services/website";
 import { TKEYS } from "../../locales";
 import { Font } from "../content";
 import { ContentLoading } from "../content/ContentLoading";
@@ -37,7 +37,7 @@ type Props = {
 };
 
 export function OfferBuy(props: Props) {
-  const [website] = createResource(fetchWebsite);
+  const [website] = createResource(websiteService.getWebiste);
   const [session] = createResource(fetchSession);
 
   const [actionState, setActionState] = createSignal<ActionState>("loading");

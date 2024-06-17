@@ -4,14 +4,14 @@ import { ParentProps, Show, Suspense, createResource } from "solid-js";
 
 import { TKEYS } from "~/locales";
 import { fetchSession, signIn, signOut } from "~/services/auth";
-import { fetchWebsite } from "~/services/website";
+import { websiteService } from "~/services/website";
 import { Font } from "../content";
 import { MdButton } from "../form/MdButton";
 
 export function AuthGuard(props: ParentProps) {
   const navigate = useNavigate();
 
-  const [website] = createResource(fetchWebsite);
+  const [website] = createResource(websiteService.getWebiste);
   const [session] = createResource(fetchSession);
 
   async function handleSignIn() {
