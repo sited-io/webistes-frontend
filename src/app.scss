@@ -69,3 +69,11 @@ html {
     --font-detail: var(--font-body-medium);
   }
 }
+
+.font-body {
+  font: var(--font-body);
+}
+
+.font-detail {
+  font: var(--font-detail);
+}

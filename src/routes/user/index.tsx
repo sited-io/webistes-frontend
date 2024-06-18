@@ -102,28 +102,22 @@ export default function UserIndex() {
                         {offers()?.[mediaSubscription.offerId].name}
                       </span>
 
-                      <div class={styles.Details}>
-                        <span class={styles.Detail}>
+                      <div>
+                        <p class="font-body">
                           <Trans key={TKEYS.subscription["payed-until"]} />:{" "}
                           {toLocaleDate(
                             Number(mediaSubscription.payedUntil),
                             trans(TKEYS.lang)
                           )}
-                        </span>
+                        </p>
                         <Show when={!_.isNil(mediaSubscription?.cancelAt)}>
-                          <Font
-                            type="body"
-                            danger
-                            inline
-                            key={TKEYS.subscription["cancel-to"]}
-                          />
-                          <Font type="body" danger inline>
-                            :{" "}
+                          <p class="font-body">
+                            <Trans key={TKEYS.subscription["cancel-to"]} />:{" "}
                             {toLocaleDate(
                               Number(mediaSubscription?.cancelAt),
                               trans(TKEYS.lang)
                             )}
-                          </Font>
+                          </p>
                         </Show>
                       </div>
 
