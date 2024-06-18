@@ -7,6 +7,7 @@ import {
 } from "~/services/sited_io/pagination/v1/pagination_pb";
 import { PartialMessage } from "@bufbuild/protobuf";
 import { MdIconButton } from "../form/MdIconButton";
+import { MdIcon } from "../assets/MdIcon";
 
 type Props = {
   readonly pagination: () => PaginationResponse | undefined;
@@ -40,11 +41,15 @@ export function Pagination(props: Props) {
 
   return (
     <div class={styles.Pagination}>
-      <MdIconButton icon="chevron_left" onClick={() => handlePagination(-1)} />
+      <MdIconButton onClick={() => handlePagination(-1)}>
+        <MdIcon icon="chevron_left" />
+      </MdIconButton>
       <span>
         {props.pagination()?.page} / {totalPages()}
       </span>
-      <MdIconButton icon="chevron_right" onClick={() => handlePagination(+1)} />
+      <MdIconButton onClick={() => handlePagination(+1)}>
+        <MdIcon icon="chevron_right" />
+      </MdIconButton>
     </div>
   );
 }

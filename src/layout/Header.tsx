@@ -13,6 +13,7 @@ import { fetchSession, signIn, signOut } from "../services/auth";
 import styles from "./Header.module.scss";
 import { NavigationSlider } from "./NavigationSlider";
 import { NavigationSliderItem } from "./NavigationSliderItem";
+import { MdIcon } from "~/components/assets/MdIcon";
 
 type Props = {
   website: WebsiteResponse;
@@ -79,9 +80,10 @@ export function Header(props: Props) {
         <div class={styles.HeaderLeft}>
           <MdIconButton
             class={styles.MenuIcon}
-            icon="menu"
             onClick={handleToggleNavigationSlider}
-          />
+          >
+            <MdIcon icon="menu" />
+          </MdIconButton>
 
           <A class={styles.MainLink} href="/">
             <Show
@@ -122,7 +124,9 @@ export function Header(props: Props) {
               </MdButton>
             }
           >
-            <MdIconButton icon="account_circle" href={userIndexPath} />
+            <MdIconButton href={userIndexPath}>
+              <MdIcon icon="account_circle" />
+            </MdIconButton>
           </Show>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { JSX } from "solid-js";
 import { MdIconButton } from "~/components/form/MdIconButton";
 import { clickOutside } from "~/directives/click-outside";
 import styles from "./NavigationSlider.module.scss";
+import { MdIcon } from "~/components/assets/MdIcon";
 
 false && clickOutside;
 
@@ -21,7 +22,9 @@ export function NavigationSlider(props: Props) {
         use:clickOutside={props.onClose}
       >
         <div class={styles.Menu}>
-          <MdIconButton icon="close" onClick={props.onClose} />
+          <MdIconButton onClick={props.onClose}>
+            <MdIcon icon="close" />
+          </MdIconButton>
         </div>
 
         <div class={styles.Border} />
