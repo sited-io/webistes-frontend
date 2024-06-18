@@ -7,6 +7,7 @@ import { fetchSession, signIn, signOut } from "~/services/auth";
 import { websiteService } from "~/services/website";
 import { Font } from "../content";
 import { MdButton } from "../form/MdButton";
+import { Section } from "../layout/Section";
 
 export function AuthGuard(props: ParentProps) {
   const navigate = useNavigate();
@@ -38,11 +39,11 @@ export function AuthGuard(props: ParentProps) {
         <Show
           when={session()?.isAuthenticated}
           fallback={
-            <>
+            <Section centered padded>
               <MdButton type="filled" onClick={handleSignIn}>
                 <Font type="body" key={TKEYS.user["sign-in"]} />
               </MdButton>
-            </>
+            </Section>
           }
         >
           {props.children}
