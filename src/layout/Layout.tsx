@@ -55,9 +55,11 @@ export function Layout(props: ParentProps) {
           <Header website={website()!} />
         </Show>
 
-        <main class={styles.Main}>
-          <div class={styles.Content}>{props.children}</div>
-        </main>
+        <Suspense>
+          <main class={styles.Main}>
+            <div class={styles.Content}>{props.children}</div>
+          </main>
+        </Suspense>
 
         <Footer />
       </Suspense>

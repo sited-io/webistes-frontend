@@ -21,7 +21,7 @@ type UserLogin = {
 
 type AccessTokens = {
   accessToken: string;
-  expiresAt: Date;
+  expiresAt: number;
   refreshToken: string;
   state?: string | undefined;
 };
@@ -32,6 +32,12 @@ type AccessTokenResponse = {
   refresh_token: string;
   id_token: string;
   state?: string;
+};
+
+const emptySession: Session = {
+  isAuthenticated: false,
+  accessTokens: undefined,
+  userLogin: undefined,
 };
 
 function buildSignInCallbackUrl() {
@@ -148,7 +154,7 @@ export async function signInCallback(event: APIEvent) {
           isAuthenticated: true,
           accessTokens: {
             accessToken: accessTokenResponse.access_token,
-            expiresAt,
+            expiresAt: expiresAt.getTime(),
             refreshToken: accessTokenResponse.refresh_token,
           },
         } as Session)
@@ -163,18 +169,27 @@ export async function signInCallback(event: APIEvent) {
 
 export async function fetchSession(): Promise<Session | undefined> {
   "use server";
+  let sessionData: Session | undefined = undefined;
   try {
     const session = await getSession();
-    return session.data as Session;
+    sessionData = session.data;
+    if (session.data.isAuthenticated) {
+      const expiresAt = session.data.accessTokens?.expiresAt || 0;
+      if (expiresAt < new Date().getTime()) {
+        sessionData = await refreshSession();
+      }
+    }
   } catch (err) {
     console.error(`[fetchSession]: ${err}`);
   }
+  return sessionData;
 }
 
 export async function refreshSession() {
   "use server";
+  const session = await getSession();
+
   try {
-    const session = await getSession();
     const sessionData: Session = session.data;
     if (_.isNil(sessionData.accessTokens) || _.isNil(sessionData.userLogin)) {
       throw new Error(
@@ -202,19 +217,21 @@ export async function refreshSession() {
       expiresAt.getSeconds() + accessTokenResponse.expires_in
     );
 
-    await session.update(
-      () =>
-        ({
-          isAuthenticated: true,
-          accessTokens: {
-            accessToken: accessTokenResponse.access_token,
-            expiresAt,
-            refreshToken: accessTokenResponse.refresh_token,
-          },
-        } as Session)
-    );
+    const newSessionData = {
+      isAuthenticated: true,
+      accessTokens: {
+        accessToken: accessTokenResponse.access_token,
+        expiresAt: expiresAt.getTime(),
+        refreshToken: accessTokenResponse.refresh_token,
+      },
+    } as Session;
+
+    await session.update(() => newSessionData);
+    return newSessionData;
   } catch (err) {
     console.error(`[refreshSession]: ${err}`);
+    await session.update(() => emptySession);
+    return emptySession;
   }
 }
 
@@ -237,14 +254,7 @@ export async function signOut() {
     );
     requestUri.searchParams.set("client_id", clientId);
 
-    await session.update(
-      () =>
-        ({
-          isAuthenticated: false,
-          userLogin: undefined,
-          accessTokens: undefined,
-        } as Session)
-    );
+    await session.update(() => emptySession);
 
     return requestUri;
   } catch (err) {
