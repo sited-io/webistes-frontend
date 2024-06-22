@@ -106,7 +106,7 @@ export function Header(props: Props) {
                 <A
                   class={styles.Link}
                   classList={{
-                    [styles.LinkActive]: Boolean(useMatch(() => "/")()),
+                    [styles.LinkActive]: Boolean(useMatch(() => page.path)()),
                   }}
                   href="/"
                 >
