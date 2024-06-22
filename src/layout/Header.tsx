@@ -65,7 +65,7 @@ export function Header(props: Props) {
         if (!_.isNil(signOutUrl)) {
           location.href = signOutUrl.toString();
         } else {
-          navigate("/");
+          navigate(indexPath);
         }
       }
     }
@@ -85,7 +85,7 @@ export function Header(props: Props) {
             <MdIcon icon="menu" />
           </MdIconButton>
 
-          <A class={styles.MainLink} href="/">
+          <A class={styles.MainLink} href={indexPath}>
             <Show
               when={!_.isEmpty(props.website.customization?.logoImageUrl)}
               fallback={props.website.name}
@@ -108,7 +108,7 @@ export function Header(props: Props) {
                   classList={{
                     [styles.LinkActive]: Boolean(useMatch(() => page.path)()),
                   }}
-                  href="/"
+                  href={page.path}
                 >
                   {page.title}
                 </A>
@@ -149,7 +149,7 @@ export function Header(props: Props) {
 
         <NavigationSliderItem
           type="body"
-          active={Boolean(useMatch(() => "/user")())}
+          active={Boolean(useMatch(() => userIndexPath)())}
           icon="account_circle"
           label="Profile"
           onClick={() => handleNavigate(userIndexPath)}

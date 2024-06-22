@@ -8,6 +8,7 @@ import { websiteService } from "~/services/website";
 import { Font } from "../content";
 import { MdButton } from "../form/MdButton";
 import { Section } from "../layout/Section";
+import { indexPath } from "~/routes";
 
 export function AuthGuard(props: ParentProps) {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export function AuthGuard(props: ParentProps) {
         if (!_.isNil(signOutUrl)) {
           location.href = signOutUrl.toString();
         } else {
-          navigate("/");
+          navigate(indexPath);
         }
       }
     }

@@ -11,6 +11,7 @@ import { signOut } from "~/services/auth";
 
 import { websiteService } from "~/services/website";
 import { AuthGuard } from "~/components/user/AuthGuard";
+import { indexPath } from "..";
 
 export default function Settings() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ export default function Settings() {
     if (!_.isNil(signOutUrl)) {
       location.href = signOutUrl.toString();
     } else {
-      navigate("/");
+      navigate(indexPath);
     }
   }
 

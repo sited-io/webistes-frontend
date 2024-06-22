@@ -21,6 +21,7 @@ import { OfferResponse } from "~/services/sited_io/commerce/v1/offer_pb";
 import { websiteService } from "~/services/website";
 import styles from "./index.module.scss";
 import { userSubscriptionPath } from "./subscriptions/[subscriptionId]";
+import { indexPath } from "..";
 
 export const userIndexPath = "/user";
 export const userIndexUrl = () => buildUrl(userIndexPath);
@@ -67,7 +68,7 @@ export default function UserIndex() {
     if (!_.isNil(signOutUrl)) {
       location.href = signOutUrl.toString();
     } else {
-      navigate("/");
+      navigate(indexPath);
     }
   }
 

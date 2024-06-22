@@ -5,6 +5,7 @@ import { getQuery, useSession } from "vinxi/http";
 
 import { buildUrl } from "~/lib/env";
 import { hashCodeVerifier } from "~/lib/string-manipulation";
+import { indexPath } from "~/routes";
 
 export type Session = {
   isAuthenticated?: boolean;
@@ -163,7 +164,7 @@ export async function signInCallback(event: APIEvent) {
   } catch (err) {
     console.error(`[signInCallback]: ${err}`);
 
-    return redirectResponse("/");
+    return redirectResponse(indexPath);
   }
 }
 
