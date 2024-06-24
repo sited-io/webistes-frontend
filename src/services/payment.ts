@@ -1,14 +1,15 @@
-import { createPromiseClient } from "@connectrpc/connect";
-import { StripeService } from "./sited_io/payment/v1/stripe_connect";
-import { createGrpcWebTransport } from "@connectrpc/connect-web";
 import { PartialMessage, toPlainMessage } from "@bufbuild/protobuf";
+import { createPromiseClient } from "@connectrpc/connect";
+import { createGrpcWebTransport } from "@connectrpc/connect-web";
+import _ from "lodash";
+
+import { withAuthHeader } from "./auth";
+import { StripeService } from "./sited_io/payment/v1/stripe_connect";
 import {
   CreateCheckoutSessionRequest,
   GetAccountRequest,
   StripeAccount,
 } from "./sited_io/payment/v1/stripe_pb";
-import _ from "lodash";
-import { withAuthHeader } from "./auth";
 
 const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
 
@@ -18,7 +19,7 @@ const stripeClient = createPromiseClient(
 );
 
 export const stripeService = {
-  getAccount: async (request: PartialMessage<GetAccountRequest>) => {
+  async getAccount(request: PartialMessage<GetAccountRequest>) {
     "use server";
     const headers = await withAuthHeader();
     const { account } = await stripeClient.getAccount(request, { headers });
@@ -27,9 +28,9 @@ export const stripeService = {
     }
     return toPlainMessage(account) as StripeAccount;
   },
-  createCheckoutSession: async (
+  async createCheckoutSession(
     request: PartialMessage<CreateCheckoutSessionRequest>
-  ) => {
+  ) {
     "use server";
     const headers = await withAuthHeader();
     const { link } = await stripeClient.createCheckoutSession(request, {

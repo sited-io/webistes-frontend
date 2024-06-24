@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { Match, Switch, createResource } from "solid-js";
 
 import { ShopPage } from "~/components/pages/ShopPage";
@@ -14,11 +15,14 @@ export default function Index() {
 
   const [page] = createResource(
     () => website()?.websiteId,
-    async (websiteId: string) =>
-      pageService.getPage({
-        websiteId,
-        path: "/",
-      })
+    async (websiteId: string) => {
+      if (!_.isNil(websiteId)) {
+        return pageService.getPage({
+          websiteId,
+          path: "/",
+        });
+      }
+    }
   );
 
   return (

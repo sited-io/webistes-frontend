@@ -1,4 +1,5 @@
 import { useParams } from "@solidjs/router";
+import _ from "lodash";
 import { Match, Switch, createResource } from "solid-js";
 
 import { ShopPage } from "~/components/pages/ShopPage";
@@ -8,16 +9,18 @@ import { pageService, websiteService } from "~/services/website";
 
 export default function Index() {
   const [website] = createResource(websiteService.getWebiste);
-
   const params = useParams();
-
+  
   const [page] = createResource(
     () => [website()?.websiteId, params?.page] as const,
-    async ([websiteId, pathParam]) =>
-      pageService.getPage({
-        websiteId,
-        path: "/" + pathParam,
-      })
+    async ([websiteId, pathParam]) => {
+      if (!_.isNil(websiteId)) {
+        return pageService.getPage({
+          websiteId,
+          path: "/" + pathParam,
+        });
+      }
+    }
   );
 
   return (

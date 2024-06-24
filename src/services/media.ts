@@ -2,7 +2,14 @@ import { PartialMessage, toPlainMessage } from "@bufbuild/protobuf";
 import { createPromiseClient } from "@connectrpc/connect";
 import { createGrpcWebTransport } from "@connectrpc/connect-web";
 import _ from "lodash";
+
 import { withAuthHeader } from "./auth";
+import { MediaService } from "./sited_io/media/v1/media_connect";
+import {
+  DownloadMediaRequest,
+  ListAccessibleMediaRequest,
+  MediaResponse,
+} from "./sited_io/media/v1/media_pb";
 import { MediaSubscriptionService } from "./sited_io/media/v1/media_subscription_connect";
 import {
   CancelMediaSubscriptionRequest,
@@ -11,12 +18,6 @@ import {
   MediaSubscriptionResponse,
   ResumeMediaSubscriptionRequest,
 } from "./sited_io/media/v1/media_subscription_pb";
-import {
-  DownloadMediaRequest,
-  ListAccessibleMediaRequest,
-  MediaResponse,
-} from "./sited_io/media/v1/media_pb";
-import { MediaService } from "./sited_io/media/v1/media_connect";
 import { PaginationResponse } from "./sited_io/pagination/v1/pagination_pb";
 
 const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
@@ -27,9 +28,9 @@ const mediaSubscriptionClient = createPromiseClient(
 );
 
 export const mediaSubscriptionService = {
-  getMediaSubscription: async (
+  async getMediaSubscription(
     request: PartialMessage<GetMediaSubscriptionRequest>
-  ) => {
+  ) {
     "use server";
     const headers = await withAuthHeader();
     const { mediaSubscription } =
@@ -43,9 +44,9 @@ export const mediaSubscriptionService = {
     }
     return toPlainMessage(mediaSubscription) as MediaSubscriptionResponse;
   },
-  listMediaSubscriptions: async (
+  async listMediaSubscriptions(
     request: PartialMessage<ListMediaSubscriptionsRequest>
-  ) => {
+  ) {
     "use server";
     const headers = await withAuthHeader();
     const { mediaSubscriptions } =
@@ -61,12 +62,12 @@ export const mediaSubscriptionService = {
       toPlainMessage(m)
     ) as MediaSubscriptionResponse[];
   },
-  cancel: async (request: PartialMessage<CancelMediaSubscriptionRequest>) => {
+  async cancel(request: PartialMessage<CancelMediaSubscriptionRequest>) {
     "use server";
     const headers = await withAuthHeader();
     await mediaSubscriptionClient.cancelMediaSubscription(request, { headers });
   },
-  resume: async (request: PartialMessage<ResumeMediaSubscriptionRequest>) => {
+  async resume(request: PartialMessage<ResumeMediaSubscriptionRequest>) {
     "use server";
     const headers = await withAuthHeader();
     await mediaSubscriptionClient.resumeMediaSubscription(request, { headers });
@@ -79,9 +80,7 @@ const mediaClient = createPromiseClient(
 );
 
 export const mediaService = {
-  listAccessible: async (
-    request: PartialMessage<ListAccessibleMediaRequest>
-  ) => {
+  async listAccessible(request: PartialMessage<ListAccessibleMediaRequest>) {
     "use server";
     const headers = await withAuthHeader();
     const res = await mediaClient.listAccessibleMedia(request, {
@@ -97,7 +96,7 @@ export const mediaService = {
         (toPlainMessage(res.pagination) as PaginationResponse),
     };
   },
-  downloadMedia: async (request: PartialMessage<DownloadMediaRequest>) => {
+  async downloadMedia(request: PartialMessage<DownloadMediaRequest>) {
     "use server";
     const headers = await withAuthHeader();
     const { downloadUrl } = await mediaClient.downloadMedia(request, {

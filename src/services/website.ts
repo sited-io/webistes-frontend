@@ -27,7 +27,7 @@ const _fetchWebsite = cache(async (domain: string) => {
 }, "_fetchWebsite");
 
 export const websiteService = {
-  getWebiste: async () => {
+  async getWebiste() {
     "use server";
     const domain = getDomainFromRequestOrWindow();
     return _fetchWebsite(domain);
@@ -40,8 +40,7 @@ const pageClient = createPromiseClient(
 );
 
 export const pageService = {
-  getPage: async (request: PartialMessage<GetPageRequest>) => {
-    "use server";
+  async getPage(request: PartialMessage<GetPageRequest>) {
     const { page } = await pageClient.getPage(request);
     if (_.isNil(page)) {
       throw new Error("[pageService.getPage]: response was empty");

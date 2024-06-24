@@ -20,13 +20,15 @@ const shopClient = createPromiseClient(
 );
 
 export const shopService = {
-  getShop: async (request: PartialMessage<GetShopRequest>) => {
-    "use server";
-    const { shop } = await shopClient.getShop(request);
-    if (_.isNil(shop)) {
-      throw new Error("[shopService.getShop]: response was empty");
+  async getShop(request: PartialMessage<GetShopRequest>) {
+    try {
+      const { shop } = await shopClient.getShop(request);
+      if (!_.isNil(shop)) {
+        return toPlainMessage(shop) as ShopResponse;
+      }
+    } catch (err) {
+      console.error(err);
     }
-    return toPlainMessage(shop) as ShopResponse;
   },
 };
 
@@ -36,16 +38,14 @@ const offerClient = createPromiseClient(
 );
 
 export const offerService = {
-  getOffer: async (request: PartialMessage<GetOfferRequest>) => {
-    "use server";
+  async getOffer(request: PartialMessage<GetOfferRequest>) {
     const { offer } = await offerClient.getOffer(request);
     if (_.isNil(offer)) {
       throw new Error("[offerService.getOffer]: response was empty");
     }
     return toPlainMessage(offer) as OfferResponse;
   },
-  listOffers: async (request: PartialMessage<ListOffersRequest>) => {
-    "use server";
+  async listOffers(request: PartialMessage<ListOffersRequest>) {
     const { offers } = await offerClient.listOffers(request);
     if (_.isNil(offers)) {
       throw new Error(`Could not fetch offers`);

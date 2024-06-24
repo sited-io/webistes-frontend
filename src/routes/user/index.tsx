@@ -89,54 +89,52 @@ export default function UserIndex() {
       <Suspense fallback={<ContentLoading page />}>
         <Section flat>
           <div class={styles.Cards}>
-            <Show
-              when={!_.isEmpty(mediaSubscriptions())}
+            <For
+              each={mediaSubscriptions()}
               fallback={
                 <Trans key={TKEYS.subscription["no-subscriptions-yet"]} />
               }
             >
-              <For each={mediaSubscriptions()}>
-                {(mediaSubscription) => {
-                  return (
-                    <Card>
-                      <span class={styles.Label}>
-                        {offers()?.[mediaSubscription.offerId].name}
-                      </span>
+              {(mediaSubscription) => {
+                return (
+                  <Card>
+                    <span class={styles.Label}>
+                      {offers()?.[mediaSubscription.offerId].name}
+                    </span>
 
-                      <div>
+                    <div>
+                      <p class="font-body">
+                        <Trans key={TKEYS.subscription["payed-until"]} />:{" "}
+                        {toLocaleDate(
+                          Number(mediaSubscription.payedUntil),
+                          trans(TKEYS.lang)
+                        )}
+                      </p>
+                      <Show when={!_.isNil(mediaSubscription?.cancelAt)}>
                         <p class="font-body">
-                          <Trans key={TKEYS.subscription["payed-until"]} />:{" "}
+                          <Trans key={TKEYS.subscription["cancel-to"]} />:{" "}
                           {toLocaleDate(
-                            Number(mediaSubscription.payedUntil),
+                            Number(mediaSubscription?.cancelAt),
                             trans(TKEYS.lang)
                           )}
                         </p>
-                        <Show when={!_.isNil(mediaSubscription?.cancelAt)}>
-                          <p class="font-body">
-                            <Trans key={TKEYS.subscription["cancel-to"]} />:{" "}
-                            {toLocaleDate(
-                              Number(mediaSubscription?.cancelAt),
-                              trans(TKEYS.lang)
-                            )}
-                          </p>
-                        </Show>
-                      </div>
+                      </Show>
+                    </div>
 
-                      <div class={styles.Actions}>
-                        <MdButton
-                          type="outlined"
-                          href={userSubscriptionPath(
-                            mediaSubscription.mediaSubscriptionId
-                          )}
-                        >
-                          <Trans key={TKEYS.common.more} />
-                        </MdButton>
-                      </div>
-                    </Card>
-                  );
-                }}
-              </For>
-            </Show>
+                    <div class={styles.Actions}>
+                      <MdButton
+                        type="outlined"
+                        href={userSubscriptionPath(
+                          mediaSubscription.mediaSubscriptionId
+                        )}
+                      >
+                        <Trans key={TKEYS.common.more} />
+                      </MdButton>
+                    </div>
+                  </Card>
+                );
+              }}
+            </For>
           </div>
         </Section>
       </Suspense>
