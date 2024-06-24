@@ -21,10 +21,19 @@ export async function GET(event: APIEvent) {
   try {
     const website = await websiteService.getWebiste();
     if (!_.isNil(website)) {
-      return buildSitemapTxt(website);
+      return new Response(buildSitemapTxt(website), {
+        status: 200,
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      });
     }
   } catch (_) {
-    return new Response("Website not found", { status: 404 });
+    return new Response("Website not found", {
+      status: 404,
+    });
   }
-  return new Response("Website not found", { status: 404 });
+  return new Response("Website not found", {
+    status: 404,
+  });
 }
