@@ -14,6 +14,7 @@ import styles from "./Header.module.scss";
 import { NavigationSlider } from "./NavigationSlider";
 import { NavigationSliderItem } from "./NavigationSliderItem";
 import { MdIcon } from "~/components/assets/MdIcon";
+import { PageType } from "~/services/sited_io/websites/v1/page_pb";
 
 type Props = {
   website: WebsiteResponse;
@@ -30,6 +31,10 @@ export function Header(props: Props) {
   onMount(async () => {
     window.addEventListener("scroll", handleHeaderShadow);
   });
+
+  function showSignIn() {
+    return _.find(props.website.pages, { pageType: PageType.SHOP });
+  }
 
   function handleHeaderShadow() {
     if (!_.isNil(window)) {
@@ -116,17 +121,19 @@ export function Header(props: Props) {
             </For>
           </div>
 
-          <Show
-            when={session()?.isAuthenticated}
-            fallback={
-              <MdButton type="filled" square small onClick={handleSignIn}>
-                <Font type="body" key={TKEYS.user["sign-in"]} />
-              </MdButton>
-            }
-          >
-            <MdIconButton href={userIndexPath}>
-              <MdIcon icon="account_circle" />
-            </MdIconButton>
+          <Show when={showSignIn()}>
+            <Show
+              when={session()?.isAuthenticated}
+              fallback={
+                <MdButton type="filled" square small onClick={handleSignIn}>
+                  <Font type="body" key={TKEYS.user["sign-in"]} />
+                </MdButton>
+              }
+            >
+              <MdIconButton href={userIndexPath}>
+                <MdIcon icon="account_circle" />
+              </MdIconButton>
+            </Show>
           </Show>
         </div>
       </div>
@@ -147,13 +154,15 @@ export function Header(props: Props) {
           )}
         </For>
 
-        <NavigationSliderItem
-          type="body"
-          active={Boolean(useMatch(() => userIndexPath)())}
-          icon="account_circle"
-          label="Profile"
-          onClick={() => handleNavigate(userIndexPath)}
-        />
+        <Show when={showSignIn()}>
+          <NavigationSliderItem
+            type="body"
+            active={Boolean(useMatch(() => userIndexPath)())}
+            icon="account_circle"
+            label="Profile"
+            onClick={() => handleNavigate(userIndexPath)}
+          />
+        </Show>
       </NavigationSlider>
     </>
   );
