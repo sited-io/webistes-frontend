@@ -15,6 +15,7 @@ import { NavigationSlider } from "./NavigationSlider";
 import { NavigationSliderItem } from "./NavigationSliderItem";
 import { MdIcon } from "~/components/assets/MdIcon";
 import { PageType } from "~/services/sited_io/websites/v1/page_pb";
+import { Slot } from "~/components/layout/Slot";
 
 type Props = {
   website: WebsiteResponse;
@@ -31,10 +32,6 @@ export function Header(props: Props) {
   onMount(async () => {
     window.addEventListener("scroll", handleHeaderShadow);
   });
-
-  function showSignIn() {
-    return _.find(props.website.pages, { pageType: PageType.SHOP });
-  }
 
   function handleHeaderShadow() {
     if (!_.isNil(window)) {
@@ -120,21 +117,6 @@ export function Header(props: Props) {
               )}
             </For>
           </div>
-
-          <Show when={showSignIn()}>
-            <Show
-              when={session()?.isAuthenticated}
-              fallback={
-                <MdButton type="filled" square small onClick={handleSignIn}>
-                  <Font type="body" key={TKEYS.user["sign-in"]} />
-                </MdButton>
-              }
-            >
-              <MdIconButton href={userIndexPath}>
-                <MdIcon icon="account_circle" />
-              </MdIconButton>
-            </Show>
-          </Show>
         </div>
       </div>
 
@@ -142,19 +124,21 @@ export function Header(props: Props) {
         show={showNavigationSlider()}
         onClose={handleCloseNavigationSlider}
       >
-        <For each={props.website.pages}>
-          {(page) => (
-            <NavigationSliderItem
-              type="body"
-              active={Boolean(useMatch(() => page.path)())}
-              icon="home"
-              label={page.title}
-              onClick={() => handleNavigate(page.path)}
-            />
-          )}
-        </For>
+        <Slot name="links">
+          <For each={props.website.pages}>
+            {(page) => (
+              <NavigationSliderItem
+                type="body"
+                active={Boolean(useMatch(() => page.path)())}
+                icon="home"
+                label={page.title}
+                onClick={() => handleNavigate(page.path)}
+              />
+            )}
+          </For>
+        </Slot>
 
-        <Show when={showSignIn()}>
+        <Slot name="actions">
           <NavigationSliderItem
             type="body"
             active={Boolean(useMatch(() => userIndexPath)())}
@@ -162,7 +146,7 @@ export function Header(props: Props) {
             label="Profile"
             onClick={() => handleNavigate(userIndexPath)}
           />
-        </Show>
+        </Slot>
       </NavigationSlider>
     </>
   );

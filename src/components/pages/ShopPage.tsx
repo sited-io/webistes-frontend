@@ -8,13 +8,13 @@ import { offerService, shopService } from "~/services/commerce";
 import { PageResponse } from "~/services/sited_io/websites/v1/page_pb";
 
 type Props = {
-  website: () => WebsiteResponse | undefined;
-  page: () => PageResponse | undefined;
+  readonly website: WebsiteResponse;
+  readonly page: PageResponse;
 };
 
 export function ShopPage(props: Props) {
   const [shop] = createResource(
-    () => props.website()?.websiteId,
+    () => props.website.websiteId,
     async (websiteId: string) => shopService.getShop({ websiteId })
   );
   const [offers] = createResource(
@@ -29,8 +29,8 @@ export function ShopPage(props: Props) {
   return (
     <>
       <Title>
-        {props.website()?.name}
-        {props.page()?.title ? " | " + props.page()?.title : ""}
+        {props.website.name}
+        {props.page.title ? " | " + props.page.title : ""}
       </Title>
 
       <For each={offers()}>

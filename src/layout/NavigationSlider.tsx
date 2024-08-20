@@ -4,6 +4,7 @@ import { MdIconButton } from "~/components/form/MdIconButton";
 import { clickOutside } from "~/directives/click-outside";
 import styles from "./NavigationSlider.module.scss";
 import { MdIcon } from "~/components/assets/MdIcon";
+import { getSlots } from "~/components/layout/Slot";
 
 false && clickOutside;
 
@@ -14,6 +15,8 @@ type Props = {
 };
 
 export function NavigationSlider(props: Props) {
+  const slots = getSlots(props.children);
+
   return (
     <>
       <div
@@ -29,7 +32,9 @@ export function NavigationSlider(props: Props) {
 
         <div class={styles.Border} />
 
-        <div class={styles.Links}>{props.children}</div>
+        <div class={styles.Links}>{slots.links}</div>
+
+        <div class={styles.Actions}>{slots.actions}</div>
       </div>
     </>
   );

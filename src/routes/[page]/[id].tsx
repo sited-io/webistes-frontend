@@ -23,14 +23,5 @@ export default function PageDetail() {
     }
   );
 
-  const [pageDetail] = createResource(
-    () => page(),
-    async (page: PageResponse) => {
-      if (page.pageType === PageType.SHOP) {
-        console.log("SHOP");
-      }
-    }
-  );
-
   return <></>;
 }

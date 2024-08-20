@@ -1,10 +1,9 @@
 import _ from "lodash";
-import { Match, Switch, createResource } from "solid-js";
+import { createResource } from "solid-js";
 
-import { ShopPage } from "~/components/pages/ShopPage";
-import { StaticPage } from "~/components/pages/StaticPage";
+import { ResourceBoundary } from "~/components/layout/ResourceBoundary";
+import { Page } from "~/components/pages/Page";
 import { buildUrl } from "~/lib/env";
-import { PageType } from "~/services/sited_io/websites/v1/page_pb";
 import { pageService, websiteService } from "~/services/website";
 
 export const indexPath = "/";
@@ -27,14 +26,11 @@ export default function Index() {
 
   return (
     <>
-      <Switch>
-        <Match when={page()?.pageType === PageType.STATIC}>
-          <StaticPage website={website} page={page} />
-        </Match>
-        <Match when={page()?.pageType === PageType.SHOP}>
-          <ShopPage website={website} page={page} />
-        </Match>
-      </Switch>
+      <ResourceBoundary resource={website}>
+        <ResourceBoundary resource={page}>
+          <Page website={website()!} page={page()!} />
+        </ResourceBoundary>
+      </ResourceBoundary>
     </>
   );
 }
