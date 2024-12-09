@@ -20,8 +20,8 @@ jobs:
       - name: Build Docker image
         run: >
           docker build \
-            --build-arg VITE_MAIN_WEBSITE_URL=https://dev.peoplesmarkets.com \
-            --build-arg VITE_SERIVCE_APIS_URL=https://api-dev.peoplesmarkets.com \
+            --build-arg VITE_MAIN_WEBSITE_URL=${{ vars.VITE_MAIN_WEBSITE_URL }} \
+            --build-arg VITE_SERIVCE_APIS_URL=${{ vars.VITE_SERIVCE_APIS_URL }} \
             --tag $IMAGE_TAG --file Dockerfile .
 
       - name: Login to GitHub Container Registry
