@@ -33,7 +33,6 @@ const _fetchWebsite = cache(async (domain: string) => {
 
 export const websiteService = {
   getWebiste: async () => {
-    console.log("VITE_SERIVCE_APIS_URL", baseUrl);
     const domain = getDomainFromRequestOrWindow();
     return _fetchWebsite(domain);
   },
@@ -62,6 +61,7 @@ const staticPageClient = createPromiseClient(
 export const staticPageService = {
   getStaticPage: async (request: PartialMessage<GetStaticPageRequest>) => {
     const { staticPage } = await staticPageClient.getStaticPage(request);
+    console.log("STATIC PAGE", staticPage);
     if (_.isNil(staticPage)) {
       throw new Error("[staticPageService.getStaticPage]: response was empty");
     }

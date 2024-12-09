@@ -3,22 +3,12 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import {
-  AddDomainToShopRequest,
-  AddDomainToShopResponse,
-  GetClientIdForDomainRequest,
-  GetClientIdForDomainResponse,
-  GetDomainStatusRequest,
-  GetDomainStatusResponse,
-  RemoveDomainFromShopRequest,
-  RemoveDomainFromShopResponse,
-  UpdateDomainStatusRequest,
-  UpdateDomainStatusResponse,
-} from "./shop_domain_pb.js";
+import { AddDomainToShopRequest, AddDomainToShopResponse, GetClientIdForDomainRequest, GetClientIdForDomainResponse, GetDomainStatusRequest, GetDomainStatusResponse, RemoveDomainFromShopRequest, RemoveDomainFromShopResponse, UpdateDomainStatusRequest, UpdateDomainStatusResponse } from "./shop_domain_pb.js";
 import { MethodKind } from "@bufbuild/protobuf";
 
 /**
  * @generated from service sited_io.commerce.v1.ShopDomainService
+ * @deprecated
  */
 export const ShopDomainService = {
   typeName: "sited_io.commerce.v1.ShopDomainService",
@@ -68,5 +58,6 @@ export const ShopDomainService = {
       O: RemoveDomainFromShopResponse,
       kind: MethodKind.Unary,
     },
-  },
+  }
 } as const;
+
