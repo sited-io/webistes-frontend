@@ -10,7 +10,7 @@ export function getSlots(_children: JSX.Element) {
       for (const part of parts.toArray() as unknown as Props[]) {
         setSlots(part.name, () => part.children);
       }
-    })
+    }),
   );
 
   return slots;

@@ -1,11 +1,7 @@
 import { useParams } from "@solidjs/router";
 import _ from "lodash";
 import { createResource } from "solid-js";
-import {
-  PageResponse,
-  PageType,
-} from "~/services/sited_io/websites/v1/page_pb";
-import { websiteService, pageService } from "~/services/website";
+import { pageService, websiteService } from "~/services/website";
 
 export default function PageDetail() {
   const [website] = createResource(websiteService.getWebiste);
@@ -20,8 +16,8 @@ export default function PageDetail() {
           path: "/" + pathParam,
         });
       }
-    }
+    },
   );
 
-  return <></>;
+  return <>{page}</>;
 }

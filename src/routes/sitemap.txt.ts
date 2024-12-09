@@ -1,4 +1,4 @@
-import type { APIEvent } from "@solidjs/start/server";
+// import type { APIEvent } from "@solidjs/start/server";
 import _ from "lodash";
 
 import { getDomainFromRequestOrWindow } from "~/lib/env";
@@ -17,7 +17,7 @@ function buildSitemapTxt(website: WebsiteResponse): string {
   return sites.join("\n");
 }
 
-export async function GET(event: APIEvent) {
+export async function GET() {
   try {
     const website = await websiteService.getWebiste();
     if (!_.isNil(website)) {
@@ -28,7 +28,7 @@ export async function GET(event: APIEvent) {
         },
       });
     }
-  } catch (_) {
+  } catch {
     return new Response("Website not found", {
       status: 404,
     });

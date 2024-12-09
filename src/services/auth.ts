@@ -72,7 +72,7 @@ export type SignInPrompt = "create" | "select_account" | "login" | undefined;
 export async function signIn(
   clientId: string,
   redirectTo: string,
-  prompt?: SignInPrompt
+  prompt?: SignInPrompt,
 ): Promise<URL | undefined> {
   "use server";
   try {
@@ -107,7 +107,7 @@ export async function signIn(
             redirectUri,
             redirectTo,
           },
-        } as Session)
+        }) as Session,
     );
 
     return requestUri;
@@ -127,7 +127,7 @@ export async function signInCallback(event: APIEvent) {
 
     const { clientId, codeVerifier, redirectUri, redirectTo } =
       sessionData.userLogin;
-    const { code, state } = getQuery(event.nativeEvent);
+    const { code } = getQuery(event.nativeEvent);
 
     if (_.isNil(code)) {
       return new Response("Could not get code from query", { status: 500 });
@@ -146,7 +146,7 @@ export async function signInCallback(event: APIEvent) {
 
     const expiresAt = new Date();
     expiresAt.setSeconds(
-      expiresAt.getSeconds() + accessTokenResponse.expires_in
+      expiresAt.getSeconds() + accessTokenResponse.expires_in,
     );
 
     await session.update(
@@ -158,7 +158,7 @@ export async function signInCallback(event: APIEvent) {
             expiresAt: expiresAt.getTime(),
             refreshToken: accessTokenResponse.refresh_token,
           },
-        } as Session)
+        }) as Session,
     );
     return redirectResponse(redirectTo);
   } catch (err) {
@@ -194,7 +194,7 @@ export async function refreshSession() {
     const sessionData: Session = session.data;
     if (_.isNil(sessionData.accessTokens) || _.isNil(sessionData.userLogin)) {
       throw new Error(
-        "Could not find AccessTokens or UserLogin on session cookie"
+        "Could not find AccessTokens or UserLogin on session cookie",
       );
     }
     const { refreshToken } = sessionData.accessTokens;
@@ -215,7 +215,7 @@ export async function refreshSession() {
 
     const expiresAt = new Date();
     expiresAt.setSeconds(
-      expiresAt.getSeconds() + accessTokenResponse.expires_in
+      expiresAt.getSeconds() + accessTokenResponse.expires_in,
     );
 
     const newSessionData = {
@@ -251,7 +251,7 @@ export async function signOut() {
 
     requestUri.searchParams.set(
       "post_logout_redirect_uri",
-      buildSignOutCallbackUrl()
+      buildSignOutCallbackUrl(),
     );
     requestUri.searchParams.set("client_id", clientId);
 

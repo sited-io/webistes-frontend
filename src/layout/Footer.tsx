@@ -1,10 +1,8 @@
 import { A } from "@solidjs/router";
-import { ParentProps } from "solid-js";
 
-import { SitedIoLogo } from "~/components/assets/SitedIoLogo";
 import styles from "./Footer.module.scss";
 
-export function Footer(props: ParentProps) {
+export function Footer() {
   function mainWebsiteDisplay() {
     const url = new URL(import.meta.env.VITE_MAIN_WEBSITE_URL);
     return url.host;

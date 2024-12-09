@@ -2,20 +2,16 @@ import { A, useMatch, useNavigate } from "@solidjs/router";
 import _ from "lodash";
 import { For, Show, createResource, createSignal, onMount } from "solid-js";
 
+import { MdIcon } from "~/components/assets/MdIcon";
+import { Slot } from "~/components/layout/Slot";
 import { indexPath } from "~/routes";
 import { WebsiteResponse } from "~/services/sited_io/websites/v1/website_pb";
-import { Font } from "../components/content/Font";
-import { MdButton } from "../components/form/MdButton";
 import { MdIconButton } from "../components/form/MdIconButton";
-import { TKEYS } from "../locales";
 import { userIndexPath } from "../routes/user";
-import { fetchSession, signIn, signOut } from "../services/auth";
+import { fetchSession } from "../services/auth";
 import styles from "./Header.module.scss";
 import { NavigationSlider } from "./NavigationSlider";
 import { NavigationSliderItem } from "./NavigationSliderItem";
-import { MdIcon } from "~/components/assets/MdIcon";
-import { PageType } from "~/services/sited_io/websites/v1/page_pb";
-import { Slot } from "~/components/layout/Slot";
 
 type Props = {
   website: WebsiteResponse;
@@ -24,7 +20,7 @@ type Props = {
 export function Header(props: Props) {
   const navigate = useNavigate();
 
-  const [session] = createResource(fetchSession);
+  createResource(fetchSession);
 
   const [showHeaderShadow, setShowHeaderShadow] = createSignal(false);
   const [showNavigationSlider, setShowNavigationSlider] = createSignal(false);
@@ -51,26 +47,6 @@ export function Header(props: Props) {
   function handleNavigate(path: string) {
     handleCloseNavigationSlider();
     navigate(path);
-  }
-
-  async function handleSignIn() {
-    handleCloseNavigationSlider();
-
-    const clientId = props.website.clientId;
-    const redirectTo = location.href;
-    if (!_.isNil(clientId) && !_.isNil(redirectTo)) {
-      const signInUrl = await signIn(clientId, redirectTo);
-      if (!_.isNil(signInUrl)) {
-        location.href = signInUrl.toString();
-      } else {
-        const signOutUrl = await signOut();
-        if (!_.isNil(signOutUrl)) {
-          location.href = signOutUrl.toString();
-        } else {
-          navigate(indexPath);
-        }
-      }
-    }
   }
 
   return (

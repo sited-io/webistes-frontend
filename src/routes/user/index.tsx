@@ -34,7 +34,7 @@ export default function UserIndex() {
   const [website] = createResource(websiteService.getWebiste);
   const [shop] = createResource(
     () => website()?.websiteId,
-    async (websiteId: string) => shopService.getShop({ websiteId })
+    async (websiteId: string) => shopService.getShop({ websiteId }),
   );
 
   const [mediaSubscriptions, { refetch }] = createResource(
@@ -46,7 +46,7 @@ export default function UserIndex() {
           isAccessible: true,
         });
       }
-    }
+    },
   );
 
   const [offers] = createResource(
@@ -60,7 +60,7 @@ export default function UserIndex() {
         _offers[offer.offerId] = offer;
       }
       return _offers;
-    }
+    },
   );
 
   async function handleSignOut() {
@@ -107,7 +107,7 @@ export default function UserIndex() {
                         <Trans key={TKEYS.subscription["payed-until"]} />:{" "}
                         {toLocaleDate(
                           Number(mediaSubscription.payedUntil),
-                          trans(TKEYS.lang)
+                          trans(TKEYS.lang),
                         )}
                       </p>
                       <Show when={!_.isNil(mediaSubscription?.cancelAt)}>
@@ -115,7 +115,7 @@ export default function UserIndex() {
                           <Trans key={TKEYS.subscription["cancel-to"]} />:{" "}
                           {toLocaleDate(
                             Number(mediaSubscription?.cancelAt),
-                            trans(TKEYS.lang)
+                            trans(TKEYS.lang),
                           )}
                         </p>
                       </Show>
@@ -125,7 +125,7 @@ export default function UserIndex() {
                       <MdButton
                         type="outlined"
                         href={userSubscriptionPath(
-                          mediaSubscription.mediaSubscriptionId
+                          mediaSubscription.mediaSubscriptionId,
                         )}
                       >
                         <Trans key={TKEYS.common.more} />

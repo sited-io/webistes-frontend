@@ -1,3 +1,8 @@
+import {
+  applyTheme,
+  argbFromHex,
+  themeFromSourceColor,
+} from "@material/material-color-utilities";
 import { Link, MetaProvider } from "@solidjs/meta";
 import {
   ParentProps,
@@ -6,18 +11,12 @@ import {
   createEffect,
   createResource,
 } from "solid-js";
-import {
-  applyTheme,
-  argbFromHex,
-  themeFromSourceColor,
-} from "@material/material-color-utilities";
-import _ from "lodash";
 
+import { WebsiteResponse } from "~/services/sited_io/websites/v1/website_pb";
 import { websiteService } from "../services/website";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import styles from "./Layout.module.scss";
-import { WebsiteResponse } from "~/services/sited_io/websites/v1/website_pb";
 
 const DEFAULT_PRIMARY_COLOR = "#410002";
 

@@ -26,7 +26,7 @@ export function removeEmptyLinesEnd(lines: string[] | undefined): string[] {
 
 export function trimLines(
   lines: string[] | undefined,
-  max: number | undefined
+  max: number | undefined,
 ): string[] {
   if (_.isNil(lines) || _.isEmpty(lines)) {
     return [];
@@ -60,7 +60,7 @@ export function Multiline(props: Props) {
       return [];
     }
 
-    let lines = props.text?.split("\n");
+    const lines = props.text?.split("\n");
     return trimLines(lines, props.maxRows);
   }
 

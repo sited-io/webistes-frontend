@@ -51,7 +51,7 @@ export default function UserSubscription() {
   const [mediaSubscription] = createResource(
     () => subscriptionId,
     async (mediaSubscriptionId: string) =>
-      mediaSubscriptionService.getMediaSubscription({ mediaSubscriptionId })
+      mediaSubscriptionService.getMediaSubscription({ mediaSubscriptionId }),
   );
 
   const [offer] = createResource(
@@ -59,7 +59,7 @@ export default function UserSubscription() {
     async (offerId: string) =>
       offerService.getOffer({
         offerId,
-      })
+      }),
   );
 
   const [files] = createResource(
@@ -78,7 +78,7 @@ export default function UserSubscription() {
           },
         });
       }
-    }
+    },
   );
 
   async function handleConfirmCancelSubscription() {
@@ -143,7 +143,7 @@ export default function UserSubscription() {
                 <Trans key={TKEYS.subscription["payed-until"]} />:{" "}
                 {toLocaleDate(
                   Number(mediaSubscription()?.payedUntil),
-                  trans(TKEYS.lang)
+                  trans(TKEYS.lang),
                 )}
               </span>
             </Show>
@@ -158,7 +158,7 @@ export default function UserSubscription() {
                 :{" "}
                 {toLocaleDate(
                   Number(mediaSubscription()?.cancelAt),
-                  trans(TKEYS.lang)
+                  trans(TKEYS.lang),
                 )}
               </Font>
             </Show>
@@ -185,7 +185,8 @@ export default function UserSubscription() {
 
             <Show
               when={
-                files()?.pagination?.totalElements! > files()?.pagination?.size!
+                (files()?.pagination?.totalElements || 0) >
+                (files()?.pagination?.size || 0)
               }
             >
               <Section centered flat>

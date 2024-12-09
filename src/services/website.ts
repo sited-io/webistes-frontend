@@ -19,7 +19,7 @@ const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
 
 const websiteClient = createPromiseClient(
   WebsiteService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 const _fetchWebsite = cache(async (domain: string) => {
@@ -40,7 +40,7 @@ export const websiteService = {
 
 const pageClient = createPromiseClient(
   PageService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 export const pageService = {
@@ -55,7 +55,7 @@ export const pageService = {
 
 const staticPageClient = createPromiseClient(
   StaticPageService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 export const staticPageService = {

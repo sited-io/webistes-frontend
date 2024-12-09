@@ -15,11 +15,11 @@ type Props = {
 export function ShopPage(props: Props) {
   const [shop] = createResource(
     () => props.website.websiteId,
-    async (websiteId: string) => shopService.getShop({ websiteId })
+    async (websiteId: string) => shopService.getShop({ websiteId }),
   );
   const [offers] = createResource(
     () => shop()?.shopId,
-    async (shopId: string) => offerService.listOffers({ shopId })
+    async (shopId: string) => offerService.listOffers({ shopId }),
   );
 
   function isLastItem(index: number) {

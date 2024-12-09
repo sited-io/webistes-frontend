@@ -24,12 +24,12 @@ const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
 
 const mediaSubscriptionClient = createPromiseClient(
   MediaSubscriptionService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 export const mediaSubscriptionService = {
   async getMediaSubscription(
-    request: PartialMessage<GetMediaSubscriptionRequest>
+    request: PartialMessage<GetMediaSubscriptionRequest>,
   ) {
     "use server";
     const headers = await withAuthHeader();
@@ -39,13 +39,13 @@ export const mediaSubscriptionService = {
       });
     if (_.isNil(mediaSubscription)) {
       throw new Error(
-        "[mediaSubscriptionService.getMediaSubscription]: response was empty"
+        "[mediaSubscriptionService.getMediaSubscription]: response was empty",
       );
     }
     return toPlainMessage(mediaSubscription) as MediaSubscriptionResponse;
   },
   async listMediaSubscriptions(
-    request: PartialMessage<ListMediaSubscriptionsRequest>
+    request: PartialMessage<ListMediaSubscriptionsRequest>,
   ) {
     "use server";
     const headers = await withAuthHeader();
@@ -55,11 +55,11 @@ export const mediaSubscriptionService = {
       });
     if (_.isNil(mediaSubscriptions)) {
       throw new Error(
-        "[mediaSubscriptionService.listMediaSubscriptions]: response was empty"
+        "[mediaSubscriptionService.listMediaSubscriptions]: response was empty",
       );
     }
     return mediaSubscriptions.map((m) =>
-      toPlainMessage(m)
+      toPlainMessage(m),
     ) as MediaSubscriptionResponse[];
   },
   async cancel(request: PartialMessage<CancelMediaSubscriptionRequest>) {
@@ -76,7 +76,7 @@ export const mediaSubscriptionService = {
 
 const mediaClient = createPromiseClient(
   MediaService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 export const mediaService = {

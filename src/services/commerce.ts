@@ -16,7 +16,7 @@ const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
 
 const shopClient = createPromiseClient(
   ShopService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 export const shopService = {
@@ -34,7 +34,7 @@ export const shopService = {
 
 const offerClient = createPromiseClient(
   OfferService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 export const offerService = {

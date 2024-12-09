@@ -1,12 +1,11 @@
-import { Trans } from "@mbarzda/solid-i18next";
 import { createSignal } from "solid-js";
 
-import { TKEYS } from "../../locales";
-import styles from "./MediaListItem.module.scss";
 import { MediaResponse } from "~/services/sited_io/media/v1/media_pb";
+import { TKEYS } from "../../locales";
+import { Font } from "../content";
 import { MdButton } from "../form/MdButton";
 import { DownloadMediaDialog } from "./DownloadMediaDialog";
-import { Font } from "../content";
+import styles from "./MediaListItem.module.scss";
 
 type Props = {
   media: () => MediaResponse;

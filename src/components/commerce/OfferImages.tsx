@@ -23,7 +23,7 @@ export function OfferImages(props: Props) {
   });
 
   function isSelectedImage(
-    offerImage: OfferImageResponse | undefined
+    offerImage: OfferImageResponse | undefined,
   ): boolean {
     return selectedImage()?.offerImageId === offerImage?.offerImageId;
   }

@@ -48,7 +48,7 @@ export function parseJwtPayload(token: string) {
       .map(function (c) {
         return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
       })
-      .join("")
+      .join(""),
   );
 
   return JSON.parse(jsonPayload);
@@ -88,7 +88,7 @@ export function addHtmlLinebreaks(text?: string): string {
 export async function readAsUint8Array(
   file: File,
   start: number,
-  end: number
+  end: number,
 ): Promise<Uint8Array> {
   const fileChunk = file.slice(start, end);
 
@@ -139,6 +139,6 @@ export function isCssColor(value: any): boolean {
 // Stolen from: https://www.regextester.com/103452
 export function isValidHostname(value: string): boolean {
   return /(?=^.{4,253}$)(^((?!-)[a-zA-Z0-9-]{0,62}[a-zA-Z0-9]\.)+[a-zA-Z]{2,63}$)/.test(
-    value
+    value,
   );
 }

@@ -24,10 +24,10 @@ export async function GET(event: APIEvent) {
           headers: {
             "Content-Type": "text/plain",
           },
-        }
+        },
       );
     }
-  } catch (_) {
+  } catch {
     return new Response("Website not found", { status: 404 });
   }
   return new Response("Website not found", { status: 404 });

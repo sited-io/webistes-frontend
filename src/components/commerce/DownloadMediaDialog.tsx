@@ -1,15 +1,13 @@
 import { Trans } from "@mbarzda/solid-i18next";
-import { A } from "@solidjs/router";
 import { Suspense, createResource } from "solid-js";
 
+import { mediaService } from "~/services/media";
+import { MediaResponse } from "~/services/sited_io/media/v1/media_pb";
 import { TKEYS } from "../../locales";
 import { Font } from "../content";
-import { MdDialog } from "../layout/MdDialog";
-import styles from "./DownloadMediaDialog.module.scss";
-import { MediaResponse } from "~/services/sited_io/media/v1/media_pb";
-import { MdButton } from "../form/MdButton";
-import { mediaService } from "~/services/media";
 import { ContentLoading } from "../content/ContentLoading";
+import { MdButton } from "../form/MdButton";
+import { MdDialog } from "../layout/MdDialog";
 
 type Props = {
   show: boolean;
@@ -26,7 +24,7 @@ export function DownloadMediaDialog(props: Props) {
 
   const [mediaDownloadUrl] = createResource(
     getMediaDownloadLink,
-    async (media) => mediaService.downloadMedia({ mediaId: media.mediaId })
+    async (media) => mediaService.downloadMedia({ mediaId: media.mediaId }),
   );
 
   return (

@@ -1,11 +1,11 @@
-import { assert, describe, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { trimLines } from "./Multiline";
 
 describe("Multiline", () => {
   describe("trimLines", () => {
     function testTrimLinesHappy(
       lines: string[] | undefined,
-      max: number | undefined
+      max: number | undefined,
     ) {
       let res;
       try {

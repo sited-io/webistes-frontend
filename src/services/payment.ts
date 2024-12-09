@@ -15,7 +15,7 @@ const baseUrl = import.meta.env.VITE_SERIVCE_APIS_URL;
 
 const stripeClient = createPromiseClient(
   StripeService,
-  createGrpcWebTransport({ baseUrl })
+  createGrpcWebTransport({ baseUrl }),
 );
 
 export const stripeService = {
@@ -29,7 +29,7 @@ export const stripeService = {
     return toPlainMessage(account) as StripeAccount;
   },
   async createCheckoutSession(
-    request: PartialMessage<CreateCheckoutSessionRequest>
+    request: PartialMessage<CreateCheckoutSessionRequest>,
   ) {
     "use server";
     const headers = await withAuthHeader();
@@ -38,7 +38,7 @@ export const stripeService = {
     });
     if (_.isNil(link)) {
       throw new Error(
-        "[stripeClient.createCheckoutSession]: response was empty"
+        "[stripeClient.createCheckoutSession]: response was empty",
       );
     }
     return link;

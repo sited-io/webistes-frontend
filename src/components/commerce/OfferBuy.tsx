@@ -10,6 +10,7 @@ import {
 
 import { userIndexPath, userIndexUrl } from "~/routes/user";
 import { SignInPrompt, fetchSession, signIn } from "~/services/auth";
+import { shopService } from "~/services/commerce";
 import { mediaSubscriptionService } from "~/services/media";
 import { stripeService } from "~/services/payment";
 import {
@@ -23,7 +24,6 @@ import { Font } from "../content";
 import { ContentLoading } from "../content/ContentLoading";
 import { MdButton } from "../form/MdButton";
 import styles from "./OfferBuy.module.scss";
-import { shopService } from "~/services/commerce";
 
 type ActionState =
   | "already-subscribed"
@@ -45,7 +45,7 @@ export function OfferBuy(props: Props) {
 
   const [shop] = createResource(
     () => website()?.websiteId,
-    async (websiteId: string) => shopService.getShop({ websiteId })
+    async (websiteId: string) => shopService.getShop({ websiteId }),
   );
 
   const [mediaSubscription] = createResource(
@@ -58,9 +58,11 @@ export function OfferBuy(props: Props) {
             offerId,
           });
           return res;
-        } catch (_) {}
+        } catch (err) {
+          console.error(err);
+        }
       }
-    }
+    },
   );
 
   const [stripeAccount] = createResource(
@@ -72,11 +74,11 @@ export function OfferBuy(props: Props) {
       };
       try {
         stripeAccount = await stripeService.getAccount({ shopId });
-      } catch (err) {
+      } catch {
         return stripeAccount;
       }
       return stripeAccount;
-    }
+    },
   );
 
   createEffect(() => {
