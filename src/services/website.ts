@@ -33,6 +33,7 @@ const _fetchWebsite = cache(async (domain: string) => {
 
 export const websiteService = {
   getWebiste: async () => {
+    console.log("VITE_SERIVCE_APIS_URL", baseUrl);
     const domain = getDomainFromRequestOrWindow();
     return _fetchWebsite(domain);
   },
